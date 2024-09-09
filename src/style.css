@@ -1,0 +1,85 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Updated color scheme to black and white */
+  color: rgba(255, 255, 255, 0.87); /* Light white text */
+  background-color: #121212; /* Dark black background */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #e0e0e0; /* Neutral white link */
+  text-decoration: inherit;
+}
+a:hover {
+  color: #ffffff; /* White on hover */
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #121212; /* Background for the body */
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: #ffffff; /* White for headings */
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #333333; /* Dark gray button background */
+  color: #ffffff; /* White button text */
+  cursor: pointer;
+  transition: background-color 0.25s, border-color 0.25s;
+}
+button:hover {
+  background-color: #444444; /* Lighter gray on hover */
+  border-color: #ffffff; /* White border on hover */
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.card {
+  padding: 2em;
+  background-color: #1c1c1c; /* Slightly lighter black for card background */
+  color: #ffffff; /* White text inside the card */
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #000000; /* Dark text for light mode */
+    background-color: #f9f9f9; /* White background for light mode */
+  }
+  a:hover {
+    color: #646cff; /* Blue for hover state in light mode */
+  }
+  button {
+    background-color: #f9f9f9; /* Light background for buttons in light mode */
+  }
+}
