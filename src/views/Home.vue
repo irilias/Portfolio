@@ -80,30 +80,31 @@ const toastType = ref('error');
 
 const languageContent = ref({
   EN: {
-    heading: "Full Stack Solutions Tailored to Your Business Needs",
-    description: "I'm a Full Stack Developer with expertise in .NET, Vue.js, and Azure. With 7 years of experience across various industries, I specialize in building scalable, high-performance applications.",
-    description_hook:" Let's talk about your next project.",
-    contactButton: "Contact Me",
-    downloadResumeButton: "Download Resume",
-    seeProjectsButton: "See Projects",
-    availableForWork: "Available for freelance and permanent positions.",
-    currentLocation: "Current Location: Annecy, GMT+2",
+    heading: "Full Stack solutions tailored to your business",
+    description: "I'm a full stack developer specializing in .NET, Vue.js, and Azure. With 7 years of experience across various industries. I collaborate on developing efficient and reliable applications that can scale with the needs of the business.",
+    description_hook: "Let’s discuss your next project.",
+    contactButton: "Get in Touch",
+    downloadResumeButton: "Download my resume",
+    seeProjectsButton: "View my projects",
+    availableForWork: "Open to freelance and full-time opportunities.",
+    currentLocation: "Currently in Annecy, GMT+2",
     developerMode: "Developer Mode",
-    resumeDownloadError: "Failed to download resume. Please try again later.",
+    resumeDownloadError: "Failed to download the resume. Please try again later.",
   },
   FR: {
-    heading: "Solutions Full Stack Adaptées à Vos Besoins Métiers",
-    description: "Je suis développeur Full Stack spécialisé en .NET, Vue.js et Azure. Fort de 7 ans d'expérience dans divers secteurs, je me concentre sur la création d'applications performantes et évolutives.",
-    description_hook:"Discutons de votre prochain projet.",
+    heading: "Des solutions full stack adaptées à vos besoins",
+    description: "Je suis développeur full stack spécialisé en .NET, Vue.js et Azure. Avec 7 ans d'expérience dans plusieurs secteurs. Je participe au développement d'applications efficaces et fiables, adaptées aux besoins de l'entreprise.",
+    description_hook: "Parlons de votre prochain projet.",
     contactButton: "Me Contacter",
-    downloadResumeButton: "Télécharger le CV",
-    seeProjectsButton: "Voir mes Projets",
+    downloadResumeButton: "Télécharger mon CV",
+    seeProjectsButton: "Voir mes projets",
     availableForWork: "Disponible pour des missions freelance ou des postes en CDI.",
-    currentLocation: "Localisation Actuelle : Annecy, GMT+2",
+    currentLocation: "Actuellement à Annecy, GMT+2",
     developerMode: "Mode Développeur",
     resumeDownloadError: "Échec du téléchargement du CV. Veuillez réessayer plus tard.",
   }
 });
+
 const setLanguage = (lang) => {
   currentLanguage.value = lang;
   localStorage.setItem('language', lang);

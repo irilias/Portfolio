@@ -9,7 +9,7 @@
     min-height: 85vh;
     display: flex;
     flex-direction: column;
-    background-image: url('../assets/hero.jpg'), linear-gradient(to bottom, #000000, #1a1a1a);
+    background-image: url('../assets/hero.webp'), linear-gradient(to bottom, #000000, #1a1a1a);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -91,7 +91,7 @@
     }
 
     &__heading {
-      font-size: 3.5rem;
+      font-size: 3.2rem;
       font-weight: bold;
       margin-bottom: 1rem;
       line-height: 1.2;
