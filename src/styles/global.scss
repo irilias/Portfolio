@@ -1,11 +1,15 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+@import 'variables';
+@import 'mixins';
+
+body {
+  font-family: $font-family;
+  font-size: $font-size-base;
   line-height: 1.5;
-  font-weight: 400;
+  color: $text-color;
+  background-color: $background-color;
+}
 
-  color: rgba(255, 255, 255, 0.87); 
-  background-color: #121212;
-
+:root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

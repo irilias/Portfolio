@@ -1,0 +1,18 @@
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin transition-all {
+  transition: all $transition-duration ease;
+}
+
+@mixin button-hover {
+  &:hover {
+    background-color: $primary-color-hover;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+}

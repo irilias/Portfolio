@@ -7,12 +7,9 @@ import Home from './views/Home.vue';
     <Home />
   </div>
 </template>
-
 <style lang="scss">
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
+@import './styles/variables';
+@import './styles/mixins';
 
 .app {
   min-height: 100vh;
