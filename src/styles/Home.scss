@@ -146,11 +146,7 @@
       margin-top: 60px;
 
       &:hover {
-        background-color: #1ebd53;
         color: #ffffff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-
         .hero__cta-text {
           transform: translateX(-15px);
         }
@@ -167,7 +163,7 @@
         right: 40px;
         opacity: 0;
         transform: translateX(10px);
-        transition: all 0.3s ease;
+        @include transition-all;
       }
 
       &:hover &-icon {
@@ -206,18 +202,15 @@
       border-radius: 25px;
       font-size: 1rem;
       font-weight: bold;
-      transition: all 0.3s ease;
+      @include transition-all;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       width: 180px;
       position: relative;
       overflow: hidden;
 
       &:hover {
-        background-color: #1ebd53;
+        @include button-hover;
         color: #ffffff;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-
         .hero__button-text {
           transform: translateX(-15px);
         }
@@ -239,7 +232,7 @@
         right: 20px;
         opacity: 0;
         transform: translateX(10px);
-        transition: all 0.3s ease;
+        @include transition-all;
       }
 
       @media (max-width: 768px) {

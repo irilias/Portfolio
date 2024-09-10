@@ -107,7 +107,7 @@
       padding: 0.5rem 1rem;
       border-radius: 20px;
       font-weight: bold;
-      transition: all 0.3s ease;
+      @include transition-all;
   
       &:hover {
         background-color: #28de67;
