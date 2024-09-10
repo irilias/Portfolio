@@ -34,7 +34,7 @@
           <img src="../assets/gmail-icon-logo.svg" alt="Gmail" class="hero__cta-icon">
         </a>
         <div class="hero__additional-buttons">
-          <a href="#" class="hero__button">
+          <a href="#" class="hero__button" @click.prevent="downloadResume">
             <span class="hero__button-text">{{ languageContent[currentLanguage].downloadResumeButton }}</span>
             <img src="../assets/cv_icon.png" alt="CV" class="hero__button-icon">
           </a>
@@ -55,32 +55,45 @@
       </div>
     </section>
     <ContactModal v-if="showModal" @close="showModal = false" :currentLanguage="currentLanguage" />
+    <ToastNotification 
+      :show="showToast" 
+      :message="toastMessage" 
+      :type="toastType" 
+      @close="showToast = false"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { error } from '../utils/logger';
 import ContactModal from '../components/ContactModal.vue';
 import ProjectCarousel from '../components/ProjectCarousel.vue';
+import ToastNotification from '../components/ToastNotification.vue';
 
 const showModal = ref(false);
 const showProjects = ref(false);
+const resumeFilename = ref(import.meta.env.VITE_RESUME_FILENAME);
+const showToast = ref(false);
+const toastMessage = ref('');
+const toastType = ref('error');
 
 const languageContent = ref({
   EN: {
     heading: "Full Stack Solutions Tailored to Your Business Needs",
-    description: "I’m a Full Stack Developer with expertise in .NET, Vue.js, and Azure. With 7 years of experience across various industries, I specialize in building scalable, high-performance applications.",
-    description_hook:" Let’s talk about your next project.",
+    description: "I'm a Full Stack Developer with expertise in .NET, Vue.js, and Azure. With 7 years of experience across various industries, I specialize in building scalable, high-performance applications.",
+    description_hook:" Let's talk about your next project.",
     contactButton: "Contact Me",
     downloadResumeButton: "Download Resume",
     seeProjectsButton: "See Projects",
     availableForWork: "Available for freelance and permanent positions.",
     currentLocation: "Current Location: Annecy, GMT+2",
     developerMode: "Developer Mode",
+    resumeDownloadError: "Failed to download resume. Please try again later.",
   },
   FR: {
     heading: "Solutions Full Stack Adaptées à Vos Besoins Métiers",
-    description: "Je suis développeur Full Stack spécialisé en .NET, Vue.js et Azure. Fort de 7 ans d’expérience dans divers secteurs, je me concentre sur la création d'applications performantes et évolutives.",
+    description: "Je suis développeur Full Stack spécialisé en .NET, Vue.js et Azure. Fort de 7 ans d'expérience dans divers secteurs, je me concentre sur la création d'applications performantes et évolutives.",
     description_hook:"Discutons de votre prochain projet.",
     contactButton: "Me Contacter",
     downloadResumeButton: "Télécharger le CV",
@@ -88,6 +101,7 @@ const languageContent = ref({
     availableForWork: "Disponible pour des missions freelance ou des postes en CDI.",
     currentLocation: "Localisation Actuelle : Annecy, GMT+2",
     developerMode: "Mode Développeur",
+    resumeDownloadError: "Échec du téléchargement du CV. Veuillez réessayer plus tard.",
   }
 });
 const setLanguage = (lang) => {
@@ -98,6 +112,29 @@ const setLanguage = (lang) => {
 const currentLanguage = ref(localStorage.getItem('language') || 'EN');
 
 localStorage.setItem('language', currentLanguage.value);
+
+const downloadResume = async () => {
+  try {
+    const response = await fetch(`/resumes/${resumeFilename.value}`);
+    if (!response.ok) {
+      throw new Error('Resume file not found');
+    }
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = resumeFilename.value;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    error('Error downloading resume:', err);
+    toastMessage.value = languageContent.value[currentLanguage].resumeDownloadError;
+    toastType.value = 'error';
+    showToast.value = true;
+  }
+};
 
 </script>
 

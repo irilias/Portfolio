@@ -16,6 +16,8 @@ dist-ssr/
 *.local
 .env.local
 .env.*.local
+.env
+
 
 # Vite specific
 **/public/*.map
