@@ -6,61 +6,107 @@
         <div class="hero__social-icons">
           <i class="fab fa-linkedin"></i>
           <i class="fab fa-github"></i>
+          <div class="hero__language-switcher">
+            <span @click="setLanguage('EN')" :class="{ active: currentLanguage === 'EN' }">EN</span>
+            <span>|</span>
+            <span @click="setLanguage('FR')" :class="{ active: currentLanguage === 'FR' }">FR</span>
+          </div>
         </div>
       </div>
       <div class="hero__content">
-        <h1 class="hero__heading">Designing websites / apps :: HEADING needed</h1>
+        <h1 class="hero__heading">{{ languageContent[currentLanguage].heading }}</h1>
         <div class="hero__contact-info">
-          <p>Email: email@email.com | Phone: maybe not?</p>
+          <p>Email: irilias@gmail.com</p>
         </div>
-        <p class="hero__availability">Available for freelance work.</p>
+        <p class="hero__availability">{{ languageContent[currentLanguage].availableForWork }}</p>
         <p class="hero__description">
-          hero descirption? 
+          {{ languageContent[currentLanguage].description }} 
+        </p>
+        <p class="hero__description">
+          {{ languageContent[currentLanguage].description_hook }} 
         </p>
         <a href="#" class="hero__cta" @click.prevent="showModal = true">
-          <span class="hero__cta-text">Contact Me</span>
+          <span class="hero__cta-text">{{ languageContent[currentLanguage].contactButton }}</span>
           <img src="../assets/gmail-icon-logo.svg" alt="Gmail" class="hero__cta-icon">
         </a>
         <div class="hero__additional-buttons">
           <a href="#" class="hero__button">
-            <span class="hero__button-text">Download Resume</span>
+            <span class="hero__button-text">{{ languageContent[currentLanguage].downloadResumeButton }}</span>
             <img src="../assets/cv_icon.png" alt="CV" class="hero__button-icon">
           </a>
-          <a href="#" class="hero__button">
-            <span class="hero__button-text">See Projects</span>
+          <a href="#" class="hero__button" @click.prevent="showProjects = true">
+            <span class="hero__button-text">{{ languageContent[currentLanguage].seeProjectsButton }}</span>
             <img src="../assets/projects_icon.png" alt="Projects" class="hero__button-icon">
           </a>
+          <ProjectCarousel v-if="showProjects"  @close="showProjects = false" :currentLanguage="currentLanguage" />
         </div>
       </div>
       <div class="hero__location-mode">
-        <p>Current Location: Annecy, GMT+2</p>
+        <p>{{ languageContent[currentLanguage].currentLocation }}</p>
         <label class="switch">
-          <input type="checkbox">
+          <input type="checkbox" disabled>
           <span class="slider round"></span>
         </label>
-        <span>Organize Mode</span>
+        <span class="developer-mode-text">{{ languageContent[currentLanguage].developerMode }}</span>
       </div>
     </section>
-    <ContactModal v-if="showModal" @close="showModal = false" />
+    <ContactModal v-if="showModal" @close="showModal = false" :currentLanguage="currentLanguage" />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import ContactModal from '../components/ContactModal.vue';
+import ProjectCarousel from '../components/ProjectCarousel.vue';
 
 const showModal = ref(false);
+const showProjects = ref(false);
+
+const languageContent = ref({
+  EN: {
+    heading: "Full Stack Solutions Tailored to Your Business Needs",
+    description: "I’m a Full Stack Developer with expertise in .NET, Vue.js, and Azure. With 7 years of experience across various industries, I specialize in building scalable, high-performance applications.",
+    description_hook:" Let’s talk about your next project.",
+    contactButton: "Contact Me",
+    downloadResumeButton: "Download Resume",
+    seeProjectsButton: "See Projects",
+    availableForWork: "Available for freelance and permanent positions.",
+    currentLocation: "Current Location: Annecy, GMT+2",
+    developerMode: "Developer Mode",
+  },
+  FR: {
+    heading: "Solutions Full Stack Adaptées à Vos Besoins Métiers",
+    description: "Je suis développeur Full Stack spécialisé en .NET, Vue.js et Azure. Fort de 7 ans d’expérience dans divers secteurs, je me concentre sur la création d'applications performantes et évolutives.",
+    description_hook:"Discutons de votre prochain projet.",
+    contactButton: "Me Contacter",
+    downloadResumeButton: "Télécharger le CV",
+    seeProjectsButton: "Voir mes Projets",
+    availableForWork: "Disponible pour des missions freelance ou des postes en CDI.",
+    currentLocation: "Localisation Actuelle : Annecy, GMT+2",
+    developerMode: "Mode Développeur",
+  }
+});
+const setLanguage = (lang) => {
+  currentLanguage.value = lang;
+  localStorage.setItem('language', lang);
+};
+
+const currentLanguage = ref(localStorage.getItem('language') || 'EN');
+
+localStorage.setItem('language', currentLanguage.value);
+
 </script>
 
 <style lang="scss" scoped>
 .hero {
     text-align: center;
     padding: 2rem;
+    margin: 2rem;
     max-width: 100%;
-    min-height: 100vh;
+    min-height: 85vh;
     display: flex;
     flex-direction: column;
-    background-image: url('../assets/hero.jpg'), linear-gradient(to bottom, #000000, #1a1a1a); /* Dark gradient */
+    background-image: url('../assets/hero.jpg'), linear-gradient(to bottom, #000000, #1a1a1a);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -73,17 +119,15 @@ const showModal = ref(false);
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.75); /* Darker overlay */
+      background-color: rgba(0, 0, 0, 0.75); 
     }
 
     &__header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
-      padding: 20px;
+      padding: 10px;
       position: relative;
-      z-index: 2;
     }
 
     &__logo {
@@ -97,26 +141,45 @@ const showModal = ref(false);
 
       i {
         font-size: 1.5rem;
-        color: #f0f0f0; /* White social icons */
+        color: #f0f0f0; 
         cursor: pointer;
         transition: color 0.3s ease;
 
         &:hover {
-          color: #28de67; /* Green hover effect */
+          color: #28de67; 
         }
       }
-    }
+    .hero__language-switcher {
+    font-size: 1rem;
+    display: flex;
+    gap: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    span {
+        transition: color 0.3s ease;
+        &.active {
+          font-weight: bold;
+          color: #28de67;
+        }
+
+        &:hover {
+          color: #28de67;
+        }
+      }
+    } 
+  }
 
     &__content {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: flex-start;
       position: relative;
       z-index: 1;
       max-width: 800px;
       margin: 0 auto;
+      text-align: left;
     }
 
     &__heading {
@@ -124,7 +187,8 @@ const showModal = ref(false);
       font-weight: bold;
       margin-bottom: 1rem;
       line-height: 1.2;
-      color: #ffffff; /* White heading */
+      color: #ffffff; 
+      text-align: left;
 
       @media (max-width: 768px) {
         font-size: 2.5rem;
@@ -133,21 +197,20 @@ const showModal = ref(false);
 
     &__contact-info {
       font-size: 1.1rem;
-      color: #bfbfbf; /* Light gray for contact info */
+      color: #bfbfbf; 
       margin-bottom: 0.5rem;
     }
 
     &__availability {
       font-size: 1.1rem;
-      color: #28de67; /* Green for availability status */
+      color: #28de67; 
       margin-bottom: 1rem;
     }
 
     &__description {
       font-size: 1.3rem;
       margin-bottom: 2rem;
-      color: #d3d3d3; /* Light gray for description */
-
+      color: #d3d3d3;
       @media (max-width: 768px) {
         font-size: 1.1rem;
       }
@@ -169,6 +232,9 @@ const showModal = ref(false);
       overflow: hidden;
       position: relative;
       width: 180px;
+      margin-left: auto;
+      margin-right: auto; 
+      margin-top: 60px;
 
       &:hover {
         background-color: #1ebd53;
@@ -189,7 +255,7 @@ const showModal = ref(false);
         width: 24px;
         height: 24px;
         position: absolute;
-        right: 50px;
+        right: 40px;
         opacity: 0;
         transform: translateX(10px);
         transition: all 0.3s ease;
@@ -278,8 +344,7 @@ const showModal = ref(false);
       position: absolute;
       bottom: 20px;
       right: 20px;
-      z-index: 2;
-      color: #ffffff; /* White for location and toggle text */
+      color: #ffffff;
       text-align: right;
 
       p {
@@ -329,7 +394,7 @@ const showModal = ref(false);
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #d3d3d3; /* Gray background */
+      background-color: #d3d3d3;
       transition: .4s;
       border-radius: 34px;
 
@@ -340,18 +405,31 @@ const showModal = ref(false);
         width: 26px;
         left: 4px;
         bottom: 4px;
-        background-color: #ffffff; /* White toggle button */
+        background-color: #ffffff;
         transition: .4s;
         border-radius: 50%;
       }
     }
 
     input:checked + .slider {
-      background-color: #28de67; /* Green when toggle is ON */
+      background-color: #28de67; 
     }
 
     input:checked + .slider:before {
       transform: translateX(26px);
     }
+
+    input:disabled + .slider {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    input:disabled + .slider:before {
+      background-color: #999;
+    }
+  }
+
+  .developer-mode-text {
+    opacity: 0.5;
   }
   </style>
