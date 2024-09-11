@@ -1,7 +1,8 @@
 
 <template>
   <div class="home">
-    <header class="header">
+    <div class="home__content">
+      <header class="header">
       <img src="../assets/logo.png" alt="Logo" class="header__logo">
       <div class="header__right">
         <div class="header__social-icons">
@@ -18,7 +19,7 @@
           <span @click="setLanguage('FR')" :class="{ active: currentLanguage === 'FR' }">FR</span>
         </div>
       </div>
-    </header>
+      </header>
 
     <main class="main">
       <h1 class="main__heading">Full Stack solutions tailored to your business</h1>
@@ -54,7 +55,7 @@
         <span>Developer Mode</span>
       </div>
     </footer>
-
+    </div>
   </div>
 </template>
 
