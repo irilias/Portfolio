@@ -19,12 +19,43 @@
               <span v-for="(tag, tagIndex) in project.tags" :key="tagIndex" class="carousel__tag">{{ tag }}</span>
             </div>
             <div class="carousel__buttons">
-              <a :href="project.liveDemo" target="_blank" class="carousel__button">{{ languageContent[currentLanguage].demo }}</a>
-              <a :href="project.repository" target="_blank" class="carousel__button">{{ languageContent[currentLanguage].repository }}</a>
+              <div class="carousel__button-wrapper">
+                <a :href="project.liveDemo"
+                   target="_blank"
+                   class="carousel__button"
+                   :class="{ 'carousel__button--disabled': project.status !== 'public' }"
+                   @mouseenter="showTooltip(project.status, 'demo')"
+                   @mouseleave="hideTooltip('demo')"
+                   @click.prevent="project.status !== 'public'">
+                  {{ languageContent[props.currentLanguage].demo }}
+                </a>
+                <div v-if="hoverTooltip.demo.show && project.status !== 'public'"
+                     class="carousel__tooltip"
+                     :class="{ 'carousel__tooltip--confidential': project.status === 'confidential',
+                               'carousel__tooltip--in-progress': project.status === 'in-progress' }">
+                  {{ hoverTooltip.demo.message }}
+                </div>
+              </div>
+              <div class="carousel__button-wrapper">
+                <a :href="project.repository"
+                   target="_blank"
+                   class="carousel__button"
+                   :class="{ 'carousel__button--disabled': project.status !== 'public' }"
+                   @mouseenter="showTooltip(project.status, 'repository')"
+                   @mouseleave="hideTooltip('repository')"
+                   @click.prevent="project.status !== 'public'">
+                  {{ languageContent[props.currentLanguage].repository }}
+                </a>
+                <div v-if="hoverTooltip.repository.show && project.status !== 'public'"
+                     class="carousel__tooltip"
+                     :class="{ 'carousel__tooltip--confidential': project.status === 'confidential',
+                               'carousel__tooltip--in-progress': project.status === 'in-progress' }">
+                  {{ hoverTooltip.repository.message }}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <button class="carousel__arrow carousel__arrow--left" @click="prevSlide">‹</button>
+         </div>
+       </div>        <button class="carousel__arrow carousel__arrow--left" @click="prevSlide">‹</button>
         <button class="carousel__arrow carousel__arrow--right" @click="nextSlide">›</button>
         <div class="carousel__dots">
           <span
@@ -45,18 +76,25 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps(['currentLanguage']);
 
+const hoverTooltip = ref({
+  demo: { show: false, message: '' },
+  repository: { show: false, message: '' }
+});
 
 const languageContent = ref({
   EN: {
     repository: "Repository",
-    demo:"Live Demo",
+    demo: "Live Demo",
+    confidentialMessage: "This project is confidential and access to the repository and live demo is restricted.",
+    inProgressMessage: "This project is currently in progress. The repository and live demo are not available yet.",
   },
   FR: {
-    repository:"Dépôt",
+    repository: "Dépôt",
     demo: "Démo en Direct",
+    confidentialMessage: "Ce projet est confidentiel et l'accès au dépôt et à la démo en direct est restreint.",
+    inProgressMessage: "Ce projet est actuellement en cours. Le dépôt et la démo en direct ne sont pas encore disponibles.",
   }
 });
-
 
 const projects = ref([
   {
@@ -71,7 +109,8 @@ const projects = ref([
     image: '/engie.webp',
     tags: ['ASP.NET Core', 'C#', 'VB.NET', 'EF Core', 'JavaScript', 'jQuery', 'Bootstrap', 'CSS3', 'HTML5', 'SQL Server', 'Azure DevOps', 'TFVC','Azure Service Bus', 'SonarQube', 'MSTest', 'Moq', 'Automapper', 'Cypress', 'Log4net'],
     liveDemo: 'https://project1-demo.com',
-    repository: 'https://github.com/user/project1'
+    repository: 'https://github.com/user/project1',
+    status: 'confidential',
   },
   {
     title: {
@@ -85,7 +124,8 @@ const projects = ref([
     image: '/obs.webp',
     tags: ['.NET 6', 'C#', 'EF Core', 'Vue.js', 'JavaScript', 'Boosted', 'CSS3', 'SASS', 'BEM', 'HTML5', 'SQL Server', 'Azure DevOps','Git', 'SonarQube', 'Docker', 'Redis', 'Event Bus', 'CaaS', 'xUnit', 'JetBrains dotTrace', 'Serilog', 'Kibana'],
     liveDemo: 'https://project2-demo.com',
-    repository: 'https://github.com/user/project2'
+    repository: 'https://github.com/user/project2',
+    status: 'confidential',
   },
   {
     title: {
@@ -99,7 +139,8 @@ const projects = ref([
     image: '/axilum.webp',
     tags: ['ASP.NET Webforms','ASP.NET Winforms', 'C#', 'Powershell', 'Bash', 'Windows Embedded 8', 'Azure AD', 'JavaScript', 'CSS3', 'HTML5'],
     liveDemo: 'https://project3-demo.com',
-    repository: 'https://github.com/user/project3'
+    repository: 'https://github.com/user/project3',
+    status: 'confidential',
   },
   {
     title: {
@@ -113,7 +154,8 @@ const projects = ref([
     image: '/gunnebo.webp',
     tags: ['C++','C#/.NET', 'Windows CE 7', 'Xamarin', 'NFC', 'QR Code', 'SQLite', 'Azure AD', 'JavaScript', 'CSS3', 'HTML5'],
     liveDemo: 'https://project3-demo.com',
-    repository: 'https://github.com/user/project3'
+    repository: 'https://github.com/user/project3',
+    status: 'confidential',
   },
   {
     title: {
@@ -127,7 +169,8 @@ const projects = ref([
     image: '/portfolio.webp',
     tags: ['Vue.js', 'SCSS', 'BEM'],
     liveDemo: 'https://project3-demo.com',
-    repository: 'https://github.com/user/project3'
+    repository: 'https://github.com/user/project3',
+    status: 'public',
   },
   {
     title: {
@@ -141,7 +184,8 @@ const projects = ref([
     image: '/salaires.dev.webp',
     tags: ['Vue.js', 'SCSS', 'BEM'],
     liveDemo: 'https://project3-demo.com',
-    repository: 'https://github.com/user/project3'
+    repository: 'https://github.com/user/project3',
+    status: 'in-progress'
   }
 ]);
 
@@ -187,7 +231,24 @@ onMounted(() => {
 onUnmounted(() => {
   stopAutoplay();
 });
+const showTooltip = (status, type) => {
+  if (status !== 'public' && !hoverTooltip.value[type].show) {
+    hoverTooltip.value[type] = {
+      show: true,
+      message: status === 'confidential' 
+        ? languageContent.value[props.currentLanguage].confidentialMessage
+        : languageContent.value[props.currentLanguage].inProgressMessage
+    };
+  }
+};
+
+const hideTooltip = (type) => {
+  hoverTooltip.value[type].show = false;
+};
+
 </script>
+
+
 <style lang="scss" scoped>
 @import '../styles/ProjectCarousel.scss';
 </style>

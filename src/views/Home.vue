@@ -42,7 +42,11 @@
             <span class="hero__button-text">{{ languageContent[currentLanguage].seeProjectsButton }}</span>
             <img src="../assets/projects_icon.png" alt="Projects" class="hero__button-icon">
           </a>
-          <ProjectCarousel v-if="showProjects"  @close="showProjects = false" :currentLanguage="currentLanguage" />
+          <ProjectCarousel 
+            v-if="showProjects"  
+            @close="showProjects = false" 
+            :currentLanguage="currentLanguage" 
+          />
         </div>
       </div>
       <div class="hero__location-mode">
@@ -136,7 +140,6 @@ const downloadResume = async () => {
     showToast.value = true;
   }
 };
-
 </script>
 
 <style lang="scss" scoped>
