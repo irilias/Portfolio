@@ -79,9 +79,6 @@ const frLang = ref(null);
 const addTouchListeners = (element, activeClass = 'touch-active') => {
   element.addEventListener('touchstart', () => {
     element.classList.add(activeClass);
-  });
-
-  element.addEventListener('touchend', () => {
     setTimeout(() => {
       element.classList.remove(activeClass);
     }, 300);
