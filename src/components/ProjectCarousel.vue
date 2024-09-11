@@ -13,49 +13,20 @@
             :class="['carousel__slide', { 'carousel__slide--active': index === activeIndex }]"
           >
             <img :src="project.image" alt="Project Image" class="carousel__image" />
-            <h2 class="carousel__title">{{ project.title[currentLanguage] }}</h2>
-            <p class="carousel__description">{{ project.description[currentLanguage] }}</p>
-            <div class="carousel__tags">
-              <span v-for="(tag, tagIndex) in project.tags" :key="tagIndex" class="carousel__tag">{{ tag }}</span>
-            </div>
-            <div class="carousel__buttons">
-              <div class="carousel__button-wrapper">
-                <a :href="project.liveDemo"
-                   target="_blank"
-                   class="carousel__button"
-                   :class="{ 'carousel__button--disabled': project.status !== 'public' }"
-                   @mouseenter="showTooltip(project.status, 'demo')"
-                   @mouseleave="hideTooltip('demo')"
-                   @click.prevent="project.status !== 'public'">
-                  {{ languageContent[props.currentLanguage].demo }}
-                </a>
-                <div v-if="hoverTooltip.demo.show && project.status !== 'public'"
-                     class="carousel__tooltip"
-                     :class="{ 'carousel__tooltip--confidential': project.status === 'confidential',
-                               'carousel__tooltip--in-progress': project.status === 'in-progress' }">
-                  {{ hoverTooltip.demo.message }}
-                </div>
+            <div class="carousel__info">
+              <h2 class="carousel__title">{{ project.title[currentLanguage] }}</h2>
+              <p class="carousel__description">{{ project.description[currentLanguage] }}</p>
+              <div class="carousel__tags">
+                <span v-for="(tag, tagIndex) in project.tags" :key="tagIndex" class="carousel__tag">{{ tag }}</span>
               </div>
-              <div class="carousel__button-wrapper">
-                <a :href="project.repository"
-                   target="_blank"
-                   class="carousel__button"
-                   :class="{ 'carousel__button--disabled': project.status !== 'public' }"
-                   @mouseenter="showTooltip(project.status, 'repository')"
-                   @mouseleave="hideTooltip('repository')"
-                   @click.prevent="project.status !== 'public'">
-                  {{ languageContent[props.currentLanguage].repository }}
-                </a>
-                <div v-if="hoverTooltip.repository.show && project.status !== 'public'"
-                     class="carousel__tooltip"
-                     :class="{ 'carousel__tooltip--confidential': project.status === 'confidential',
-                               'carousel__tooltip--in-progress': project.status === 'in-progress' }">
-                  {{ hoverTooltip.repository.message }}
-                </div>
+              <div class="carousel__buttons">
+                <a :href="project.liveDemo" target="_blank" class="carousel__button">{{ languageContent[currentLanguage].demo }}</a>
+                <a :href="project.repository" target="_blank" class="carousel__button">{{ languageContent[currentLanguage].repository }}</a>
               </div>
             </div>
-         </div>
-       </div>        <button class="carousel__arrow carousel__arrow--left" @click="prevSlide">‹</button>
+          </div>
+        </div>
+        <button class="carousel__arrow carousel__arrow--left" @click="prevSlide">‹</button>
         <button class="carousel__arrow carousel__arrow--right" @click="nextSlide">›</button>
         <div class="carousel__dots">
           <span

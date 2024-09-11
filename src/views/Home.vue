@@ -28,7 +28,7 @@
       </p>
       <p class="main__availability">Open to freelance and full-time opportunities.</p>
       <div class="main__cta">
-        <button class="main__cta-primary" ref="primaryButton">
+        <button class="main__cta-primary" ref="primaryButton" @click="showModal = true">
           <span>Get in Touch</span>
           <img src="../assets/gmail-icon-logo.svg" alt="Gmail" class="main__cta-icon">
         </button>
@@ -37,7 +37,7 @@
             <span>Download my resume</span>
             <img src="../assets/cv_icon.png" alt="CV" class="main__button-icon">
           </button>
-          <button ref="projectsButton">
+          <button ref="projectsButton"  @click="showProjects = true">
             <span>View my projects</span>
             <img src="../assets/projects_icon.png" alt="Projects" class="main__button-icon">
           </button>
@@ -57,12 +57,18 @@
     </footer>
     </div>
   </div>
+  <ContactModal v-if="showModal" @close="showModal = false" :currentLanguage="currentLanguage" />
+  <ProjectCarousel v-if="showProjects" @close="showProjects = false" :currentLanguage="currentLanguage" />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import ContactModal from '../components/ContactModal.vue';
+import ProjectCarousel from '../components/ProjectCarousel.vue';
 
 const currentLanguage = ref('EN');
+const showModal = ref(false);
+const showProjects = ref(false);
 
 const setLanguage = (lang) => {
   currentLanguage.value = lang;
