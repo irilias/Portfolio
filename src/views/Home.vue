@@ -77,7 +77,11 @@ import ToastNotification from '../components/ToastNotification.vue';
 
 const showModal = ref(false);
 const showProjects = ref(false);
-const resumeFilename = ref(import.meta.env.VITE_RESUME_FILENAME);
+const resumeFilename = ref({
+  EN: import.meta.env.VITE_RESUME_FILENAME_EN,
+  FR: import.meta.env.VITE_RESUME_FILENAME_FR
+});
+
 const showToast = ref(false);
 const toastMessage = ref('');
 const toastType = ref('error');
@@ -120,7 +124,8 @@ localStorage.setItem('language', currentLanguage.value);
 
 const downloadResume = async () => {
   try {
-    const response = await fetch(`/resumes/${resumeFilename.value}`);
+    const filename = resumeFilename.value[currentLanguage.value];
+    const response = await fetch(`/resumes/${filename}`);
     if (!response.ok) {
       throw new Error('Resume file not found');
     }
@@ -128,7 +133,7 @@ const downloadResume = async () => {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = resumeFilename.value;
+    link.download = filename;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
