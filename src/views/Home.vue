@@ -6,17 +6,17 @@
       <img src="../assets/logo.png" alt="Logo" class="header__logo">
       <div class="header__right">
         <div class="header__social-icons">
-          <a href="https://www.linkedin.com/in/irilias/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/irilias/" target="_blank" rel="noopener noreferrer" ref="linkedinIcon">
             <i class="fab fa-linkedin"></i>
           </a>
-          <a href="https://github.com/irilias" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/irilias" target="_blank" rel="noopener noreferrer" ref="githubIcon">
             <i class="fab fa-github"></i>
           </a>
         </div>
         <div class="header__language-switcher">
-          <span @click="setLanguage('EN')" :class="{ active: currentLanguage === 'EN' }">EN</span>
+          <span @click="setLanguage('EN')" :class="{ active: currentLanguage === 'EN' }" ref="enLang">EN</span>
           <span>|</span>
-          <span @click="setLanguage('FR')" :class="{ active: currentLanguage === 'FR' }">FR</span>
+          <span @click="setLanguage('FR')" :class="{ active: currentLanguage === 'FR' }" ref="frLang">FR</span>
         </div>
       </div>
       </header>
@@ -28,16 +28,16 @@
       </p>
       <p class="main__availability">Open to freelance and full-time opportunities.</p>
       <div class="main__cta">
-        <button class="main__cta-primary">
+        <button class="main__cta-primary" ref="primaryButton">
           <span>Get in Touch</span>
           <img src="../assets/gmail-icon-logo.svg" alt="Gmail" class="main__cta-icon">
         </button>
         <div class="main__cta-secondary">
-          <button>
+          <button ref="resumeButton">
             <span>Download my resume</span>
             <img src="../assets/cv_icon.png" alt="CV" class="main__button-icon">
           </button>
-          <button>
+          <button ref="projectsButton">
             <span>View my projects</span>
             <img src="../assets/projects_icon.png" alt="Projects" class="main__button-icon">
           </button>
@@ -60,13 +60,40 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const currentLanguage = ref('EN');
 
 const setLanguage = (lang) => {
   currentLanguage.value = lang;
 };
+
+const primaryButton = ref(null);
+const resumeButton = ref(null);
+const projectsButton = ref(null);
+const linkedinIcon = ref(null);
+const githubIcon = ref(null);
+const enLang = ref(null);
+const frLang = ref(null);
+
+const addTouchListeners = (element, activeClass = 'touch-active') => {
+  element.addEventListener('touchstart', () => {
+    element.classList.add(activeClass);
+  });
+
+  element.addEventListener('touchend', () => {
+    setTimeout(() => {
+      element.classList.remove(activeClass);
+    }, 300);
+  });
+};
+
+
+onMounted(() => {
+  [primaryButton.value, resumeButton.value, projectsButton.value].forEach(button => addTouchListeners(button, 'button-active'));
+  [linkedinIcon.value, githubIcon.value, enLang.value, frLang.value].forEach(element => addTouchListeners(element));
+});
+
 </script>
 
 <style lang="scss" scoped>

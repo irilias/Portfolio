@@ -72,6 +72,12 @@
     a {
       color: $text-color;
       font-size: 1.2rem;
+      transition: color 0.3s ease;
+
+      &:hover, &.touch-active {
+        color: $primary-color;
+      }
+
       @media (min-width: 400px) {
         font-size: 1.5rem;
       }
@@ -85,6 +91,11 @@
     span {
       cursor: pointer;
       padding: 0 0.5rem;
+      transition: color 0.3s ease;
+
+      &:hover, &.touch-active, &.active {
+        color: $primary-color;
+      }
 
       &.active {
         font-weight: bold;
@@ -92,7 +103,6 @@
     }
   }
 }
-
 .main {
   flex-grow: 1;
   display: flex;
@@ -162,44 +172,43 @@
         &:hover {
           color: white;
         }
+        &.button-active { 
+          background-color: $primary-color;
+          color: white;
+        }
       }
     }
-
-    &-primary, &-secondary button {
-      @include transition-all;
-      overflow: hidden;
-      position: relative;
-
-      &:hover {
-        @include button-hover;
-      }
-
-      span {
-        transition: transform 0.3s ease;
-      }
-
-      img {
-        width: 24px;
-        height: 24px;
-        position: absolute;
-        right: 20px;
-        opacity: 0;
-        transform: translateX(10px);
+      &-primary, &-secondary button {
         @include transition-all;
-      }
-
-      &:hover {
+        overflow: hidden;
+        position: relative;
         span {
-          transform: translateX(-15px);
+          transition: transform 0.3s ease;
         }
 
         img {
-          opacity: 1;
-          transform: translateX(0);
+          width: 24px;
+          height: 24px;
+          position: absolute;
+          right: 20px;
+          opacity: 0;
+          transform: translateX(10px);
+          @include transition-all;
+        }
+
+        &:hover, &.button-active {
+          @include button-hover;
+          span {
+            transform: translateX(-15px);
+          }
+
+          img {
+            opacity: 1;
+            transform: translateX(0);
+          }
         }
       }
     }
-  }
 }
 
 .footer {
