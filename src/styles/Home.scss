@@ -36,12 +36,6 @@
     position: relative;
     z-index: 2;
   }
-  @media (min-width: 400px) {
-    padding: 1rem;
-  }
-  @media (max-width: 400px) {
-    height: auto;
-  }
 }
 
 .header {
@@ -53,9 +47,6 @@
   &__logo {
     width: 80px;
     height: auto;
-    @media (min-width: 400px) {
-      width: 100px;
-    }
   }
 
   &__right {
@@ -76,13 +67,6 @@
       &:hover, &.touch-active {
         color: $primary-color;
       }
-
-      @media (min-width: 400px) {
-        font-size: 1.5rem;
-      }
-    }
-    @media (min-width: 400px) {
-      gap: 1rem;
     }
   }
 
@@ -110,41 +94,20 @@
   align-items: center;
   text-align: center;
 
-  @media (min-width: 768px) {
-    text-align: left;
-  }
-
   &__heading {
     font-size: 1.5rem;
     margin-bottom: .5rem;
-    @media (min-width: 400px) {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    @media (min-width: 768px) {
-      font-size: 2.5rem;
-    }
   }
 
   &__description {
     font-size: .9rem;
     margin-bottom: 1rem;
-    @media (min-width: 400px) {
-      font-size: 1rem;
-      margin-bottom: 2rem;
-    }
   }
 
   &__availability {
     font-size: 1.1rem;
     color: $primary-color; 
     margin-bottom: 3rem;
-  }
-  &__description, &__availability {
-    @media (min-width: 768px) {
-      font-size: 1.5rem;
-      margin-left: 2rem;
-    }
   }
 
   &__cta {
@@ -153,9 +116,7 @@
     gap: 1rem;
     width: 100%;
     max-width: 250px;
-    @media (min-width: 768px) {
-      max-width: 600px;
-    }
+
     button {
       width: 100%;
       padding: 0.5rem;
@@ -163,32 +124,17 @@
       border-radius: 50px;
       font-size: .9rem;
       cursor: pointer;
-      @media (min-width: 400px) {
-        padding: 0.75rem;
-        font-size: 1rem;
-        font-weight: bold;
-      }
     }
 
     &-primary {
       background-color: $primary-color;
       color: white;
-      @media (min-width: 768px) {
-        max-width: 50%;
-        margin: 0 auto;
-      }
     }
 
     &-secondary {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-
-      @media (min-width: 768px) {
-        flex-direction: row;
-        justify-content: space-between;
-        margin-top: 3rem;
-      }
 
       button {
         background-color: white;
@@ -236,26 +182,11 @@
   }
 }
 
-@media (max-width: 320px) {
-  .home {
-    min-height: auto;
-    height: auto;
-    overflow-y: auto;
-  }
-
-  .main {
-    padding-bottom: 2rem;
-  }
-}
-
 .footer {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 1rem;
-  @media (min-width: 400px) {
-    margin-top: 2rem;
-  }
 
   &__mode {
     display: flex;
@@ -266,9 +197,6 @@
 
   &__location {
     font-size: 0.8rem;
-    @media (min-width: 400px) {
-      font-size: 0.9rem;
-    }
   }
 }
 
@@ -314,5 +242,102 @@
 
   input:checked + .slider:before {
     transform: translateX(26px);
+  }
+}
+
+// Media Queries
+@media (min-width: 400px) {
+  .home {
+    padding: 1rem;
+  }
+
+  .header {
+    &__logo {
+      width: 100px;
+    }
+
+    &__social-icons {
+      gap: 1rem;
+
+      a {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .main {
+    &__heading {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    &__description {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    &__cta {
+      button {
+        padding: 0.75rem;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .footer {
+    margin-top: 2rem;
+
+    &__location {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .main {
+    text-align: left;
+
+    &__cta {
+      max-width: 600px;
+
+      &-primary {
+        max-width: 50%;
+        margin: 0 auto;
+      }
+
+      &-secondary {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 3rem;
+      }
+    }
+
+    &__heading {
+      font-size: 2.5rem;
+    }
+
+    &__description, &__availability {
+      font-size: 1.5rem;
+      margin-left: 2rem;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .home {
+    height: auto;
+  }
+}
+
+@media (max-width: 320px) {
+  .home {
+    min-height: auto;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .main {
+    padding-bottom: 2rem;
   }
 }

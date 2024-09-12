@@ -15,7 +15,12 @@
             <img :src="project.image" alt="Project Image" class="carousel__image" />
             <div class="carousel__info">
               <h2 class="carousel__title">{{ project.title[currentLanguage] }}</h2>
-              <p class="carousel__description">{{ project.description[currentLanguage] }}</p>
+              <div class="carousel__description">
+                {{ truncatedDescription }}
+                <span v-if="!showFullDescription && project.description[currentLanguage].length > 150" class="read-more" @click="toggleDescription">
+                  {{ languageContent[currentLanguage].readMore }}
+                </span>
+              </div>
               <div class="carousel__tags">
                 <span v-for="(tag, tagIndex) in project.tags" :key="tagIndex" class="carousel__tag">{{ tag }}</span>
               </div>
@@ -43,7 +48,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useSwipe } from '@vueuse/core';
 
 const props = defineProps(['currentLanguage']);
 
@@ -58,12 +64,14 @@ const languageContent = ref({
     demo: "Live Demo",
     confidentialMessage: "This project is confidential and access to the repository and live demo is restricted.",
     inProgressMessage: "This project is currently in progress. The repository and live demo are not available yet.",
+    readMore: "Read More",
   },
   FR: {
     repository: "Dépôt",
     demo: "Démo en Direct",
     confidentialMessage: "Ce projet est confidentiel et l'accès au dépôt et à la démo en direct est restreint.",
     inProgressMessage: "Ce projet est actuellement en cours. Le dépôt et la démo en direct ne sont pas encore disponibles.",
+    readMore: "Lire la suite",
   }
 });
 
@@ -161,6 +169,7 @@ const projects = ref([
 ]);
 
 const activeIndex = ref(0);
+
 let autoplayInterval;
 
 const nextSlide = () => {
@@ -188,12 +197,38 @@ const closeCarousel = () => {
 };
 
 const startAutoplay = () => {
-  autoplayInterval = setInterval(nextSlide, 10000); 
+  autoplayInterval = setInterval(nextSlide, 1000000000); 
 };
 
 const stopAutoplay = () => {
   clearInterval(autoplayInterval);
 };
+
+const showFullDescription = ref(false);
+
+const truncatedDescription = computed(() => {
+  const description = projects.value[activeIndex.value].description[props.currentLanguage];
+  if (showFullDescription.value || description.length <= 150) {
+    return description;
+  }
+  return description.slice(0, 150) + '...';
+});
+
+const toggleDescription = () => {
+  showFullDescription.value = !showFullDescription.value;
+};
+
+const target = ref(null);
+const { isSwiping, direction } = useSwipe(target, {
+  threshold: 50,
+  onSwipe(e) {
+    if (direction.value === 'left') {
+      nextSlide();
+    } else if (direction.value === 'right') {
+      prevSlide();
+    }
+  },
+});
 
 onMounted(() => {
   startAutoplay();

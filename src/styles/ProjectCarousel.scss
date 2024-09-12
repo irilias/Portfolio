@@ -21,7 +21,6 @@
     width: 90%;
     max-width: 800px;
     max-height: 90vh;
-    // overflow-y: auto;
     position: relative;
     padding: 1rem;
   }
@@ -33,7 +32,7 @@
     background: none;
     border: none;
     font-size: 2rem;
-    color: #b1b1b1;
+    color: $primary-color;
     cursor: pointer;
     z-index: 1010;
   }
@@ -77,10 +76,6 @@
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
     text-align: center;
-
-    @media (min-width: 768px) {
-      font-size: 2rem;
-    }
   }
 
   &__description {
@@ -88,11 +83,6 @@
     margin-bottom: 1rem;
     text-align: justify;
     line-height: 1.5;
-
-    @media (max-width: 480px) {
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
   }
 
   &__tags {
@@ -131,21 +121,18 @@
       background-color: $primary-color;
       color: #ffffff;
     }
-
-    @media (max-width: 480px) {
-      width: 100%;
-      text-align: center;
-    }
   }
 
   &__arrow {
     position: absolute;
-    top: 50%;
+    top: 30%;
     transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
     background: none;
     border: none;
-    font-size: 2rem;
-    color: #fff;
+    padding: 1rem 0.5rem;
+    font-size: 2.5rem;
+    color: $primary-color;
     cursor: pointer;
     z-index: 1005;
 
@@ -155,10 +142,6 @@
 
     &--right {
       right: 10px;
-    }
-
-    @media (max-width: 480px) {
-      font-size: 1.5rem;
     }
   }
 
@@ -186,23 +169,94 @@
   }
 }
 
+.read-more {
+  color: $primary-color;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+
+@media (min-width: 768px) {
+  .carousel {
+    &__title {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    &__wrapper {
+      height: 100%;
+    }
+
+    &__slide {
+      height: 100%;
+    }
+
+    &__image {
+      max-height: 200px;
+      object-fit: cover;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    &__title {
+      font-size: 1.2rem;
+    }
+
+    &__description {
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    &__tags {
+      margin-top: auto;
+    }
+
+    &__buttons {
+      position: sticky;
+      bottom: 0;
+      background-color: rgba($background-color, 0.9);
+      padding: 0.5rem 0;
+    }
+
+    &__arrow {
+      top: 25%;
+      padding: 0.5rem 0.25rem;
+      font-size: 2rem;
+    }
+  }
+}
 @media (max-width: 480px) {
   .carousel-modal__content {
     width: 95%;
     padding: 0.5rem;
   }
 
-  .carousel__title {
-    font-size: 1.2rem;
-  }
+  .carousel {
+    &__title {
+      font-size: 1.2rem;
+    }
 
-  .carousel__description {
-    font-size: 0.9rem;
-  }
+    &__description {
+      font-size: 0.9rem;
+    }
 
-  .carousel__button {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+    &__button {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    &__arrow {
+      font-size: 1.5rem;
+    }
   }
 }
 

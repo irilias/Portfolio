@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@vueuse/core": "^11.0.3",
     "vue": "^3.4.37"
   },
   "devDependencies": {
