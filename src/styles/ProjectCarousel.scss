@@ -23,6 +23,9 @@
     max-height: 90vh;
     position: relative;
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
   }
 
   &__close-button {
@@ -40,10 +43,14 @@
 
 .carousel {
   position: relative;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 
   &__wrapper {
     display: flex;
     transition: transform 0.5s ease-in-out;
+    flex-grow: 1;
   }
 
   &__slide {
@@ -51,6 +58,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
   }
 
   &__slide:not(.carousel__slide--active) {
@@ -65,11 +73,17 @@
     object-fit: cover;
     border-radius: 10px;
     margin-bottom: 1rem;
+    max-height: 40vh;
+    object-fit: contain;
   }
 
   &__info {
     width: 100%;
     max-width: 600px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
   }
 
   &__title {
@@ -83,6 +97,8 @@
     margin-bottom: 1rem;
     text-align: justify;
     line-height: 1.5;
+    flex-grow: 1;
+    overflow-y: auto;
   }
 
   &__tags {
@@ -91,6 +107,7 @@
     justify-content: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    margin-top: auto;
   }
 
   &__tag {
@@ -106,6 +123,7 @@
     justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
+    margin-top: 1rem;
   }
 
   &__button {
@@ -175,6 +193,48 @@
   font-weight: bold;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.carousel {
+  &__image {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .carousel__image {
+    height: 400px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .carousel__image {
+    height: 300px; 
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .carousel__image {
+    height: 250px; 
+  }
+}
+
+@media (max-width: 479px) {
+  .carousel__image {
+    height: 200px; 
+  }
+}
+
 
 @media (min-width: 768px) {
   .carousel {
@@ -192,6 +252,7 @@
 
     &__slide {
       height: 100%;
+      overflow-y: auto;
     }
 
     &__image {
@@ -200,9 +261,7 @@
     }
 
     &__info {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
+      padding: 0 1rem;
     }
 
     &__title {
@@ -210,12 +269,10 @@
     }
 
     &__description {
-      flex-grow: 1;
-      overflow-y: auto;
-    }
-
-    &__tags {
-      margin-top: auto;
+      font-size: 0.9rem;
+      max-height: 100px;
+      overflow: hidden;
+      position: relative;
     }
 
     &__buttons {
@@ -232,6 +289,7 @@
     }
   }
 }
+
 @media (max-width: 480px) {
   .carousel-modal__content {
     width: 95%;
@@ -257,14 +315,5 @@
     &__arrow {
       font-size: 1.5rem;
     }
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
