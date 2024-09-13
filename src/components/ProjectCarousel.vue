@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { useSwipe } from '@vueuse/core';
 import ProjectCard from './ProjectCard.vue';
 import { addTouchListeners } from '../utils/touchListeners';
@@ -149,10 +149,6 @@ const languageContent = ref({
 const leftArrow = ref(null);
 const rightArrow = ref(null);
 
-onMounted(() => {
-  [leftArrow.value, rightArrow.value].forEach(button => addTouchListeners(button, 'button-active'));
-});
-
 const carouselContainer = ref(null);
 const { isSwiping, direction } = useSwipe(carouselContainer);
 
@@ -166,6 +162,29 @@ watch([isSwiping, direction], ([swiping, dir]) => {
   }
 });
 
+const carouselInterval = ref(null);
+const startCarousel = () => {
+  carouselInterval.value = setInterval(() => {
+    nextProject();
+  }, 5000); 
+};
+const stopCarousel = () => {
+  clearInterval(carouselInterval.value);
+};
+const pauseCarousel = () => {
+  stopCarousel();
+  setTimeout(startCarousel, 10000); 
+};
+onMounted(() => {
+  [leftArrow.value, rightArrow.value].forEach(button => addTouchListeners(button, 'button-active'));
+  startCarousel();
+  carouselContainer.value.addEventListener('mouseenter', stopCarousel);
+  carouselContainer.value.addEventListener('mouseleave', startCarousel);
+  carouselContainer.value.addEventListener('touchstart', pauseCarousel);
+});
+onUnmounted(() => {
+  stopCarousel();
+});
 </script>
 
 <style lang="scss" scoped>
