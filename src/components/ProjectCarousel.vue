@@ -1,21 +1,23 @@
 <template>
   <div class="carousel-modal__overlay" @click="closeCarousel">
-    <div class="carousel-modal__content" @click.stop>
-      <button class="carousel__arrow carousel__arrow--left" @click="previousProject"></button>
+    <div class="carousel-modal__content" ref="carouselContainer" @click.stop>
+      <button class="carousel__arrow carousel__arrow--left" ref="leftArrow" @click="previousProject"></button>
       <ProjectCard 
         :project="projects[currentIndex]" 
         :currentLanguage="currentLanguage" 
         :languageContent="languageContent" 
         @close="closeCarousel"
       />
-      <button class="carousel__arrow carousel__arrow--right" @click="nextProject"></button>
+      <button class="carousel__arrow carousel__arrow--right" ref="rightArrow"  @click="nextProject"></button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch, onMounted } from 'vue';
+import { useSwipe } from '@vueuse/core';
 import ProjectCard from './ProjectCard.vue';
+import { addTouchListeners } from '../utils/touchListeners';
 
 const props = defineProps(['currentLanguage']);
 const emit = defineEmits(['close']);
@@ -144,6 +146,25 @@ const languageContent = ref({
   }
 });
 
+const leftArrow = ref(null);
+const rightArrow = ref(null);
+
+onMounted(() => {
+  [leftArrow.value, rightArrow.value].forEach(button => addTouchListeners(button, 'button-active'));
+});
+
+const carouselContainer = ref(null);
+const { isSwiping, direction } = useSwipe(carouselContainer);
+
+watch([isSwiping, direction], ([swiping, dir]) => {
+  if (!swiping) {
+    if (dir === 'left') {
+      nextProject();
+    } else if (dir === 'right') {
+      previousProject();
+    }
+  }
+});
 
 </script>
 
@@ -219,7 +240,7 @@ const languageContent = ref({
       transition: transform 0.3s ease, color 0.3s ease;
     }
 
-    &:hover {
+    &:hover, &.button-active {
       background-color: rgba(0, 0, 0, 0.7);
       &::before {
         color: $primary-color;

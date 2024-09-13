@@ -1,6 +1,6 @@
 <template>
   <div class="project-card">
-    <button class="project-card__close-button" @click="$emit('close')"></button>
+    <button class="project-card__close-button" ref="closeButton" @click="$emit('close')"></button>
     <div class="project-card__content">
       <div class="project-card__image-container">
         <img :src="project.image" :alt="project.title[currentLanguage]" class="project-card__image">
@@ -13,11 +13,11 @@
         </div>
       </div>
       <div class="project-card__buttons">
-        <a :href="project.liveDemo" target="_blank" class="project-card__button">
+        <a :href="project.liveDemo" target="_blank" class="project-card__button" ref="demoButton">
           <span>{{ languageContent[currentLanguage].demo }}</span>
           <img src="../assets/demo_icon.png" alt="Demo" class="project-card__button-icon">
         </a>
-        <a :href="project.repository" target="_blank" class="project-card__button">
+        <a :href="project.repository" target="_blank" class="project-card__button" ref="repoButton">
           <span>{{ languageContent[currentLanguage].repository }}</span>
           <img src="../assets/repository_icon.png" alt="Repository" class="project-card__button-icon">
         </a>
@@ -27,11 +27,24 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue';
+import { addTouchListeners } from '../utils/touchListeners';
+
 const props = defineProps({
   project: { type: Object, required: true },
   currentLanguage: { type: String, required: true },
   languageContent: { type: Object, required: true }
 });
+
+
+const closeButton = ref(null);
+const demoButton = ref(null);
+const repoButton = ref(null);
+
+onMounted(() => {
+  [closeButton.value, demoButton.value, repoButton.value].forEach(button => addTouchListeners(button, 'button-active'));
+});
+
 </script>
 
 <style lang="scss" scoped>
@@ -73,7 +86,7 @@ const props = defineProps({
       transition: transform 0.3s ease, color 0.3s ease;
     }
 
-    &:hover {
+    &:hover, &.button-active {
       background-color: rgba(0, 0, 0, 0.7);
 
       &::before {
@@ -180,7 +193,7 @@ const props = defineProps({
       transform: translateX(10px);
       @include transition-all;
     }
-    &:hover {
+    &:hover, &.button-active {
       background-color: darken($primary-color, 10%);
       color: white;
       @include button-hover;
@@ -229,7 +242,7 @@ const props = defineProps({
       transition: transform 0.3s ease;
       transform: translateX(10px);
     }
-    &:hover {
+    &:hover, &.button-active {
       img {
         opacity: 1;
         transform: scale(1.1);
