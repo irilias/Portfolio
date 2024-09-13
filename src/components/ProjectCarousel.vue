@@ -166,7 +166,7 @@ const carouselInterval = ref(null);
 const startCarousel = () => {
   carouselInterval.value = setInterval(() => {
     nextProject();
-  }, 5000); 
+  }, 5000000); 
 };
 const stopCarousel = () => {
   clearInterval(carouselInterval.value);
@@ -217,6 +217,9 @@ onUnmounted(() => {
     z-index: 1000;
     overflow: hidden;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
 .carousel {

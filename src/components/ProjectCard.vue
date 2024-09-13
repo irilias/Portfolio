@@ -54,7 +54,7 @@ onMounted(() => {
   position: relative;
   width: 100%;
   max-width: 800px;
-  height: 80vh;
+  min-height: auto; 
   background-color: $background-color;
   border-radius: 10px;
   overflow: hidden;
@@ -99,21 +99,20 @@ onMounted(() => {
   &__content {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    justify-content: flex-start;
     overflow-y: auto;
   }
 
   &__image-container {
-    flex: 0 0 auto;
-    height: 30%;
     position: relative;
     z-index: 1;
+    min-height: 100%;
   }
 
   &__image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: scale-down;
   }
 
   &__title {
@@ -123,15 +122,16 @@ onMounted(() => {
     right: 0;
     background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    padding: 10px;
+    padding: clamp(5px, 2vw, 15px);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    line-height: 1.2;
     margin: 0;
   }
 
   &__details {
-    // flex: 1 1 auto;
-    overflow-y: auto;
     padding: 20px;
     z-index: 2;
+    flex: 1 1 auto; 
   }
   &__description {
     margin-bottom: 15px;
