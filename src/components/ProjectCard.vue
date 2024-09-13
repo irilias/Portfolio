@@ -41,17 +41,21 @@ const props = defineProps({
   position: relative;
   width: 100%;
   max-width: 800px;
+  height: 80vh;
   background-color: $background-color;
   border-radius: 10px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   
   &__close-button {
     position: absolute;
-    top: 10px;
+    top: 1%;
     right: 10px;
-    width: 10px;
-    font-size: 16px;
-    background-color: rgba(128, 128, 128, 0.5);
+    width:  clamp(20px, 5vw, 50px);
+    height:  clamp(20px, 5vw, 50px);
+    font-size: clamp(12px, 2vw, 22px);
+    background-color: rgba(0, 0, 0, 0.5);
     border: none;
     border-radius: 8px;
     color: $primary-color;
@@ -61,19 +65,20 @@ const props = defineProps({
     align-items: center;
     transition: background-color 0.3s ease;
     line-height: 1;
-    z-index: 1;
+    z-index: 2;
 
     &::before {
       content: '×';
+      font-weight: bold;
       transition: transform 0.3s ease, color 0.3s ease;
     }
 
     &:hover {
-      background-color: rgba(128, 128, 128, 0.7);
+      background-color: rgba(0, 0, 0, 0.7);
 
       &::before {
         color: red;
-        transform: rotate(90deg);
+        transform: rotate(90deg) scale(1.1);
       }
     }
   }
@@ -81,15 +86,20 @@ const props = defineProps({
   &__content {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
   }
 
   &__image-container {
+    flex: 0 0 auto;
+    height: 30%;
     position: relative;
+    z-index: 1;
   }
 
   &__image {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
   }
 
@@ -102,13 +112,14 @@ const props = defineProps({
     color: white;
     padding: 10px;
     margin: 0;
-    font-size: 1.5rem;
   }
 
   &__details {
+    flex: 1 1 auto;
+    overflow-y: auto;
     padding: 20px;
+    z-index: 2;
   }
-
   &__description {
     margin-bottom: 15px;
     font-size: 1rem;
@@ -135,7 +146,7 @@ const props = defineProps({
   &__buttons {
     display: flex;
     justify-content: space-evenly;
-    padding: 0 20px 20px;
+    padding: 10px 20px;
   }
 
   &__button {

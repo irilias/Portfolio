@@ -1,18 +1,38 @@
 <template>
   <div class="carousel-modal__overlay" @click="closeCarousel">
     <div class="carousel-modal__content" @click.stop>
-    <ProjectCard :project="projects[0]" :currentLanguage="currentLanguage" :languageContent="languageContent" @close="closeCarousel"/>
+      <button class="carousel__arrow carousel__arrow--left" @click="previousProject"></button>
+      <ProjectCard 
+        :project="projects[currentIndex]" 
+        :currentLanguage="currentLanguage" 
+        :languageContent="languageContent" 
+        @close="closeCarousel"
+      />
+      <button class="carousel__arrow carousel__arrow--right" @click="nextProject"></button>
+    </div>
   </div>
-</div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import { useSwipe } from '@vueuse/core';
+import { ref } from 'vue';
 import ProjectCard from './ProjectCard.vue';
 
 const props = defineProps(['currentLanguage']);
 const emit = defineEmits(['close']);
+
+const currentIndex = ref(0);
+
+const nextProject = () => {
+  currentIndex.value = (currentIndex.value + 1) % projects.value.length;
+};
+
+const previousProject = () => {
+  currentIndex.value = (currentIndex.value - 1 + projects.value.length) % projects.value.length;
+};
+
+const closeCarousel = () => {
+  emit('close');
+};
 
 const projects = ref([
   {
@@ -124,9 +144,6 @@ const languageContent = ref({
   }
 });
 
-const closeCarousel = () => {
-  emit('close');
-};
 
 </script>
 
@@ -162,4 +179,90 @@ const closeCarousel = () => {
     padding: 20px;
   }
 }
+.carousel {
+&__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width:  clamp(20px, 5vw, 50px);
+  height:  clamp(20px, 5vw, 50px);
+  font-size: clamp(14px, 2vw, 24px);
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.1s ease;
+  z-index: 1005;
+
+  &--left {
+    left: 8%;
+    &::before {
+      content: '<';
+    }
+  }
+
+  &--right {
+    right: 8%;
+    &::before {
+      content: '>';
+    }
+  }
+
+  &--left, &--right {
+    top: 20%;
+    &::before {
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+      &::before {
+        color: $primary-color;
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+}
+
+
+@media (max-width: 768px) {
+  .carousel {
+    &__arrow {
+      &--left {
+      left: 8%;
+      top: 20%;
+    }
+
+    &--right {
+      right: 8%;
+      top: 20%;
+    }
+    }
+  }
+}
+
+@media (max-width: 414px) {
+  .carousel {
+    &__arrow {
+      &--left {
+      left: 8%;
+      top: 20%;
+    }
+
+    &--right {
+      right: 8%;
+      top: 20%;
+    }
+    }
+  }
+}
+
 </style>
+
+
