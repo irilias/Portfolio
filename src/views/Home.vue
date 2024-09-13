@@ -22,23 +22,26 @@
       </header>
 
     <main class="main">
-      <h1 class="main__heading">Full Stack solutions tailored to your business</h1>
+      <h1 class="main__heading">{{ languageContent[currentLanguage].heading }}</h1>
       <p class="main__description">
-        I'm a full stack developer specializing in .NET, Vue.js, and Azure. With 7 years of experience across various industries, I collaborate on developing efficient and reliable applications that can scale with the needs of the business.
+        {{ languageContent[currentLanguage].description }}
       </p>
-      <p class="main__availability">Open to freelance and full-time opportunities.</p>
+      <p class="main__description">
+        {{ languageContent[currentLanguage].description_hook }}
+      </p>
+      <p class="main__availability">{{ languageContent[currentLanguage].availableForWork }}</p>
       <div class="main__cta">
         <button class="main__cta-primary" ref="primaryButton" @click="showModal = true">
-          <span>Get in Touch</span>
+          <span>{{ languageContent[currentLanguage].contactButton }}</span>
           <img src="../assets/gmail-icon-logo.svg" alt="Gmail" class="main__cta-icon">
         </button>
         <div class="main__cta-secondary">
           <button ref="resumeButton">
-            <span>Download my resume</span>
+            <span>{{ languageContent[currentLanguage].downloadResumeButton }}</span>
             <img src="../assets/cv_icon.png" alt="CV" class="main__button-icon">
           </button>
           <button ref="projectsButton"  @click="showProjects = true">
-            <span>View my projects</span>
+            <span>{{ languageContent[currentLanguage].seeProjectsButton }}</span>
             <img src="../assets/projects_icon.png" alt="Projects" class="main__button-icon">
           </button>
         </div>
@@ -46,13 +49,13 @@
     </main>
 
     <footer class="footer">
-      <p class="footer__location">Currently in Annecy, GMT+2</p>
+      <p class="footer__location">{{ languageContent[currentLanguage].currentLocation }}</p>
       <div class="footer__mode">
         <label class="switch">
           <input type="checkbox" disabled>
           <span class="slider round"></span>
         </label>
-        <span>Developer Mode</span>
+        <span>{{ languageContent[currentLanguage].developerMode }}</span>
       </div>
     </footer>
     </div>
@@ -66,13 +69,41 @@ import { ref, onMounted } from 'vue';
 import ContactModal from '../components/ContactModal.vue';
 import ProjectCarousel from '../components/ProjectCarousel.vue';
 
-const currentLanguage = ref('EN');
+const currentLanguage = ref(localStorage.getItem('language') || 'EN');
 const showModal = ref(false);
 const showProjects = ref(false);
 
+const languageContent = ref({
+  EN: {
+    heading: "Full Stack Solutions Tailored to Your Business Needs",
+    description: "I’m a Full Stack Developer with expertise in .NET, Vue.js, and Azure. With 7 years of experience across various industries, I specialize in building scalable, high-performance applications.",
+    description_hook:" Let’s talk about your next project.",
+    contactButton: "Contact Me",
+    downloadResumeButton: "Download Resume",
+    seeProjectsButton: "See Projects",
+    availableForWork: "Available for freelance and permanent positions.",
+    currentLocation: "Current Location: Annecy, GMT+2",
+    developerMode: "Developer Mode",
+  },
+  FR: {
+    heading: "Solutions Full Stack Adaptées à Vos Besoins Métiers",
+    description: "Je suis développeur Full Stack spécialisé en .NET, Vue.js et Azure. Fort de 7 ans d’expérience dans divers secteurs, je me concentre sur la création d'applications performantes et évolutives.",
+    description_hook:"Discutons de votre prochain projet.",
+    contactButton: "Me Contacter",
+    downloadResumeButton: "Télécharger le CV",
+    seeProjectsButton: "Voir mes Projets",
+    availableForWork: "Disponible pour des missions freelance ou des postes en CDI.",
+    currentLocation: "Localisation Actuelle : Annecy, GMT+2",
+    developerMode: "Mode Développeur",
+  }
+});
+
 const setLanguage = (lang) => {
   currentLanguage.value = lang;
+  localStorage.setItem('language', lang);
 };
+
+localStorage.setItem('language', currentLanguage.value);
 
 const primaryButton = ref(null);
 const resumeButton = ref(null);

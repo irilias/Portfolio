@@ -128,7 +128,7 @@ onMounted(() => {
   }
 
   &__details {
-    flex: 1 1 auto;
+    // flex: 1 1 auto;
     overflow-y: auto;
     padding: 20px;
     z-index: 2;

@@ -103,11 +103,11 @@ const projects = ref([
       FR: 'Portfolio Personnel : Projets et Expériences Professionnelles',
     },
     description: {
-      EN: 'This portfolio showcases a selection of my projects and experiences, highlighting my Full-Stack development skills, particularly in .NET, Vue.js, and Azure.',
-      FR: 'Ce portfolio présente une sélection de mes projets et expériences, illustrant mes compétences en développement Full-Stack, notamment en .NET, Vue.js, et Azure.',
+      EN: 'This portfolio showcases a selection of my projects and experiences.',
+      FR: 'Ce portfolio présente une sélection de mes projets et expériences.',
     },
     image: '/portfolio.webp',
-    tags: ['Vue.js', 'SCSS', 'BEM'],
+    tags: ['Vue.js', 'SCSS', 'BEM', 'Git', 'Vercel'],
     liveDemo: 'https://project3-demo.com',
     repository: 'https://github.com/user/project3',
     status: 'public',
@@ -254,7 +254,7 @@ onUnmounted(() => {
   }
 
   &--left, &--right {
-    top: 20%;
+    top: 30%;
     &::before {
       transition: transform 0.3s ease, color 0.3s ease;
     }
