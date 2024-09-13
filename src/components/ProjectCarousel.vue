@@ -1,79 +1,18 @@
 <template>
   <div class="carousel-modal__overlay" @click="closeCarousel">
     <div class="carousel-modal__content" @click.stop>
-      <button class="carousel-modal__close-button" @click="closeCarousel">×</button>
-      <div class="carousel">
-        <div
-          class="carousel__wrapper"
-          :style="{ transform: `translateX(-${activeIndex * 100}%)` }"
-        >
-          <div
-            v-for="(project, index) in projects"
-            :key="index"
-            :class="['carousel__slide', { 'carousel__slide--active': index === activeIndex }]"
-          >
-            <img :src="project.image" alt="Project Image" class="carousel__image" />
-            <div class="carousel__info">
-              <h2 class="carousel__title">{{ project.title[currentLanguage] }}</h2>
-              <div class="carousel__description">
-                {{ truncatedDescription }}
-                <span v-if="!showFullDescription && project.description[currentLanguage].length > 150" class="read-more" @click="toggleDescription">
-                  {{ languageContent[currentLanguage].readMore }}
-                </span>
-              </div>
-              <div class="carousel__tags">
-                <span v-for="(tag, tagIndex) in project.tags" :key="tagIndex" class="carousel__tag">{{ tag }}</span>
-              </div>
-              <div class="carousel__buttons">
-                <a :href="project.liveDemo" target="_blank" class="carousel__button">{{ languageContent[currentLanguage].demo }}</a>
-                <a :href="project.repository" target="_blank" class="carousel__button">{{ languageContent[currentLanguage].repository }}</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="carousel__arrow carousel__arrow--left" @click="prevSlide">‹</button>
-        <button class="carousel__arrow carousel__arrow--right" @click="nextSlide">›</button>
-        <div class="carousel__dots">
-          <span
-            v-for="(project, index) in projects"
-            :key="index"
-            class="carousel__dot"
-            :class="{ 'carousel__dot--active': index === activeIndex }"
-            @click="setActive(index)"
-          ></span>
-        </div>
-      </div>
-    </div>
+    <ProjectCard :project="projects[0]" :currentLanguage="currentLanguage" :languageContent="languageContent" @close="closeCarousel"/>
   </div>
+</div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { useSwipe } from '@vueuse/core';
+import ProjectCard from './ProjectCard.vue';
 
 const props = defineProps(['currentLanguage']);
-
-const hoverTooltip = ref({
-  demo: { show: false, message: '' },
-  repository: { show: false, message: '' }
-});
-
-const languageContent = ref({
-  EN: {
-    repository: "Repository",
-    demo: "Live Demo",
-    confidentialMessage: "This project is confidential and access to the repository and live demo is restricted.",
-    inProgressMessage: "This project is currently in progress. The repository and live demo are not available yet.",
-    readMore: "Read More",
-  },
-  FR: {
-    repository: "Dépôt",
-    demo: "Démo en Direct",
-    confidentialMessage: "Ce projet est confidentiel et l'accès au dépôt et à la démo en direct est restreint.",
-    inProgressMessage: "Ce projet est actuellement en cours. Le dépôt et la démo en direct ne sont pas encore disponibles.",
-    readMore: "Lire la suite",
-  }
-});
+const emit = defineEmits(['close']);
 
 const projects = ref([
   {
@@ -82,8 +21,8 @@ const projects = ref([
       FR: 'Outils de Tarification Énergie et Migration Technique (Opteam & Explore)',
     },
     description: {
-      EN: 'Full-Stack Engineer responsible for designing and developing Opteam and Explore, energy pricing applications. Led the migration to a new technical stack to improve performance and maintainability, while training new recruits and implementing key architectural optimizations.',
-      FR: 'Ingénieur Full-Stack en charge de la conception et du développement des applications Opteam et Explore pour la tarification de l\'énergie. J\'ai également géré la migration vers un nouveau socle technique pour améliorer la performance et la maintenabilité, tout en formant les nouvelles recrues et en apportant des optimisations architecturales.',
+      EN: 'Full-Stack Engineer involved in the design and development of Opteam and Explore, energy pricing applications. I contributed to the migration to a new technical stack to enhance performance and maintainability, while helping train new recruits and implementing key architectural improvements.',
+      FR: 'Ingénieur Full-Stack, j’ai participé à la conception et au développement des applications Opteam et Explore pour la tarification de l\'énergie. J\'ai également contribué à la migration vers un nouveau socle technique afin d\'améliorer les performances et la maintenabilité, tout en aidant à la formation des nouvelles recrues et en mettant en place des améliorations architecturales.',
     },
     image: '/engie.webp',
     tags: ['ASP.NET Core', 'C#', 'VB.NET', 'EF Core', 'JavaScript', 'jQuery', 'Bootstrap', 'CSS3', 'HTML5', 'SQL Server', 'Azure DevOps', 'TFVC','Azure Service Bus', 'SonarQube', 'MSTest', 'Moq', 'Automapper', 'Cypress', 'Log4net'],
@@ -98,7 +37,7 @@ const projects = ref([
     },
     description: {
       EN: 'As a Full-Stack Engineer, I contributed to the development of Abacus, a B2B pricing tool for Orange Business Services. I developed new features, worked on front-end and back-end migrations, and enhanced the application\'s resilience. I also implemented a real-time notification system to track the progress of asynchronous operations triggered by an Event Bus, providing users with better visibility into the status of ongoing processes. I collaborated with international teams on various technical and functional aspects.',
-      FR: 'En tant qu\'ingénieur Full-Stack, j\’ai participé au développement d\'Abacus, un outil de tarification B2B pour Orange Business Services. J’ai conçu de nouvelles fonctionnalités, contribué à la migration du front-end et du back-end, et amélioré la résilience de l\'application. J\'ai également mis en place un système de notifications en temps réel pour suivre la progression des opérations asynchrones déclenchées via un Event Bus, offrant ainsi une meilleure visibilité aux utilisateurs sur l\'état d\'avancement des processus. J\'ai collaboré avec des équipes internationales sur divers aspects techniques et fonctionnels.',
+      FR: 'En tant qu\'ingénieur Full-Stack, j\'ai participé au développement d\'Abacus, un outil de tarification B2B pour Orange Business Services. J\'ai conçu de nouvelles fonctionnalités, contribué à la migration du front-end et du back-end, et amélioré la résilience de l\'application. J\'ai également mis en place un système de notifications en temps réel pour suivre la progression des opérations asynchrones déclenchées via un Event Bus, offrant ainsi une meilleure visibilité aux utilisateurs sur l\'état d\'avancement des processus. J\'ai collaboré avec des équipes internationales sur divers aspects techniques et fonctionnels.',
     },
     image: '/obs.webp',
     tags: ['.NET 6', 'C#', 'EF Core', 'Vue.js', 'JavaScript', 'Boosted', 'CSS3', 'SASS', 'BEM', 'HTML5', 'SQL Server', 'Azure DevOps','Git', 'SonarQube', 'Docker', 'Redis', 'Event Bus', 'CaaS', 'xUnit', 'JetBrains dotTrace', 'Serilog', 'Kibana'],
@@ -109,7 +48,7 @@ const projects = ref([
   {
     title: {
       EN: 'Design and Implementation of an Automated Update System for Medical Robots',
-      FR: 'Développement d’un Système de Mise à Jour Automatisée pour Robots Médicaux',
+      FR: 'Développement d\'un Système de Mise à Jour Automatisée pour Robots Médicaux',
     },
     description: {
       EN: 'As a Full-Stack Engineer at Axilum Robotics, I designed and developed an automated update system for their medical robots. I implemented a web application hosted on Azure to detect connected robots, prepare updates, and manage remote installations. Additionally, I developed a client-side WinForms application (robot) to retrieve and install updates, both online and offline. A SOAP-based web service was created to facilitate communication between the server and the robots. I also led functional prototyping and set up a test environment with two TMS-Robots.',
@@ -168,93 +107,59 @@ const projects = ref([
   }
 ]);
 
-const activeIndex = ref(0);
-
-let autoplayInterval;
-
-const nextSlide = () => {
-  stopAutoplay();
-  startAutoplay();
-  activeIndex.value = (activeIndex.value + 1) % projects.value.length;
-};
-
-const prevSlide = () => {
-  stopAutoplay();
-  startAutoplay();
-  activeIndex.value = (activeIndex.value - 1 + projects.value.length) % projects.value.length;
-};
-
-const setActive = (index) => {
-  stopAutoplay();
-  startAutoplay();
-  activeIndex.value = index;
-};
-
-const emit = defineEmits(['close']);
+const languageContent = ref({
+  EN: {
+    repository: "Repository",
+    demo: "Live Demo",
+    confidentialMessage: "This project is confidential and access to the repository and live demo is restricted.",
+    inProgressMessage: "This project is currently in progress. The repository and live demo are not available yet.",
+    readMore: "Read More",
+  },
+  FR: {
+    repository: "Dépôt",
+    demo: "Démo en Direct",
+    confidentialMessage: "Ce projet est confidentiel et l'accès au dépôt et à la démo en direct est restreint.",
+    inProgressMessage: "Ce projet est actuellement en cours. Le dépôt et la démo en direct ne sont pas encore disponibles.",
+    readMore: "Lire la suite",
+  }
+});
 
 const closeCarousel = () => {
   emit('close');
 };
 
-const startAutoplay = () => {
-  autoplayInterval = setInterval(nextSlide, 1000000000); 
-};
-
-const stopAutoplay = () => {
-  clearInterval(autoplayInterval);
-};
-
-const showFullDescription = ref(false);
-
-const truncatedDescription = computed(() => {
-  const description = projects.value[activeIndex.value].description[props.currentLanguage];
-  if (showFullDescription.value || description.length <= 150) {
-    return description;
-  }
-  return description.slice(0, 150) + '...';
-});
-
-const toggleDescription = () => {
-  showFullDescription.value = !showFullDescription.value;
-};
-
-const target = ref(null);
-const { isSwiping, direction } = useSwipe(target, {
-  threshold: 50,
-  onSwipe(e) {
-    if (direction.value === 'left') {
-      nextSlide();
-    } else if (direction.value === 'right') {
-      prevSlide();
-    }
-  },
-});
-
-onMounted(() => {
-  startAutoplay();
-});
-
-onUnmounted(() => {
-  stopAutoplay();
-});
-const showTooltip = (status, type) => {
-  if (status !== 'public' && !hoverTooltip.value[type].show) {
-    hoverTooltip.value[type] = {
-      show: true,
-      message: status === 'confidential' 
-        ? languageContent.value[props.currentLanguage].confidentialMessage
-        : languageContent.value[props.currentLanguage].inProgressMessage
-    };
-  }
-};
-
-const hideTooltip = (type) => {
-  hoverTooltip.value[type].show = false;
-};
-
 </script>
 
-
 <style lang="scss" scoped>
-@import '../styles/ProjectCarousel.scss';
+@import '../styles/variables.scss';
+@import '../styles/mixins.scss';
+
+.carousel-modal{
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    background-color: $background-color;
+    border-radius: 10px;
+    z-index: 1000;
+    overflow: hidden;
+    padding: 20px;
+  }
+}
 </style>

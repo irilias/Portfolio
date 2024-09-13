@@ -13,5 +13,10 @@ import Home from './views/Home.vue';
 
 .app {
   min-height: 100vh;
+  position: relative;
+}
+.home {
+  position: relative;
+  z-index: 1;
 }
 </style>
