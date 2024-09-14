@@ -155,6 +155,23 @@ const currentProject = computed(() => {
   };
 });
 
+const nextProjectImage = computed(() => {
+  const nextIndex = (currentIndex.value + 1) % projects.value.length;
+  return generateSrcSet(projects.value[nextIndex].image);
+});
+
+const preloadNextImage = () => {
+  const sizes = [320, 375, 414, 768, 1024, 1280, 1440, 1920, 2560];
+  sizes.forEach(size => {
+    const img = new Image();
+    img.src = `/images/${nextProjectImage.value.split('.')[0]}-${size}w.webp`;
+  });
+};
+
+watch(currentIndex, () => {
+  preloadNextImage();
+});
+
 const closeCarousel = () => {
   emit('close');
 };
@@ -198,6 +215,7 @@ onMounted(() => {
   carouselContainer.value.addEventListener('mouseenter', stopCarousel);
   carouselContainer.value.addEventListener('mouseleave', startCarousel);
   carouselContainer.value.addEventListener('touchstart', pauseCarousel);
+  preloadNextImage();
 });
 onUnmounted(() => {
   stopCarousel();
