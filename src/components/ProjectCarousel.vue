@@ -3,7 +3,7 @@
     <div class="carousel-modal__content" ref="carouselContainer" @click.stop>
       <button class="carousel__arrow carousel__arrow--left" ref="leftArrow" @click="previousProject"></button>
       <ProjectCard 
-        :project="projects[currentIndex]" 
+        :project="currentProject" 
         :currentLanguage="currentLanguage" 
         :languageContent="languageContent" 
         @close="closeCarousel"
@@ -14,28 +14,10 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted, computed  } from 'vue';
 import { useSwipe } from '@vueuse/core';
 import ProjectCard from './ProjectCard.vue';
 import { addTouchListeners } from '../utils/touchListeners';
-
-const props = defineProps(['currentLanguage']);
-const emit = defineEmits(['close']);
-
-const currentIndex = ref(0);
-
-const nextProject = () => {
-  currentIndex.value = (currentIndex.value + 1) % projects.value.length;
-};
-
-const previousProject = () => {
-  currentIndex.value = (currentIndex.value - 1 + projects.value.length) % projects.value.length;
-};
-
-const closeCarousel = () => {
-  emit('close');
-};
-
 const projects = ref([
   {
     title: {
@@ -146,8 +128,41 @@ const languageContent = ref({
   }
 });
 
-const leftArrow = ref(null);
-const rightArrow = ref(null);
+const props = defineProps(['currentLanguage']);
+const emit = defineEmits(['close']);
+
+
+const currentIndex = ref(0);
+const nextProject = () => {
+  currentIndex.value = (currentIndex.value + 1) % projects.value.length;
+};
+
+const previousProject = () => {
+  currentIndex.value = (currentIndex.value - 1 + projects.value.length) % projects.value.length;
+};
+
+const generateSrcSet = (imageName) => {
+  const sizes = [320, 375, 414, 768, 1024, 1280, 1440, 1920, 2560];
+  const baseName = imageName.split('.')[0];
+  return sizes.map(size => `${baseName}-${size}w.webp ${size}w`).join(', ');
+};
+
+const currentProject = computed(() => {
+  const project = projects.value[currentIndex.value];
+  return {
+    ...project,
+    image: generateSrcSet(project.image)
+  };
+});
+
+const closeCarousel = () => {
+  emit('close');
+};
+
+const goToSlide = (index) => {
+  currentIndex.value = index;
+};
+
 
 const carouselContainer = ref(null);
 const { isSwiping, direction } = useSwipe(carouselContainer);
@@ -175,6 +190,8 @@ const pauseCarousel = () => {
   stopCarousel();
   setTimeout(startCarousel, 10000); 
 };
+const leftArrow = ref(null);
+const rightArrow = ref(null);
 onMounted(() => {
   [leftArrow.value, rightArrow.value].forEach(button => addTouchListeners(button, 'button-active'));
   startCarousel();
@@ -185,127 +202,11 @@ onMounted(() => {
 onUnmounted(() => {
   stopCarousel();
 });
+
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/variables.scss';
-@import '../styles/mixins.scss';
-
-.carousel-modal{
-  &__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  &__content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    max-width: 800px;
-    max-height: 90vh;
-    background-color: $background-color;
-    border-radius: 10px;
-    z-index: 1000;
-    overflow: hidden;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-}
-.carousel {
-&__arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width:  clamp(20px, 5vw, 50px);
-  height:  clamp(20px, 5vw, 50px);
-  font-size: clamp(14px, 2vw, 24px);
-  font-weight: bold;
-  background-color: rgba(0, 0, 0, 0.5);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: background-color 0.1s ease;
-  z-index: 1005;
-
-  &--left {
-    left: 8%;
-    &::before {
-      content: '<';
-    }
-  }
-
-  &--right {
-    right: 8%;
-    &::before {
-      content: '>';
-    }
-  }
-
-  &--left, &--right {
-    top: 30%;
-    &::before {
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-
-    &:hover, &.button-active {
-      background-color: rgba(0, 0, 0, 0.7);
-      &::before {
-        color: $primary-color;
-        transform: scale(1.1);
-      }
-    }
-  }
-}
-}
-
-
-@media (max-width: 768px) {
-  .carousel {
-    &__arrow {
-      &--left {
-      left: 8%;
-      top: 20%;
-    }
-
-    &--right {
-      right: 8%;
-      top: 20%;
-    }
-    }
-  }
-}
-
-@media (max-width: 414px) {
-  .carousel {
-    &__arrow {
-      &--left {
-      left: 8%;
-      top: 20%;
-    }
-
-    &--right {
-      right: 8%;
-      top: 20%;
-    }
-    }
-  }
-}
-
+@import '../styles/ProjectCarousel.scss';
 </style>
 
 
