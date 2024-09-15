@@ -64,7 +64,7 @@
       font-size: 1.2rem;
       transition: color 0.3s ease;
 
-      &:hover, &.touch-active {
+      &:hover, &.button-active {
         color: $primary-color;
       }
     }
@@ -76,7 +76,7 @@
       padding: 0 0.5rem;
       transition: color 0.3s ease;
 
-      &:hover, &.touch-active, &.active {
+      &:hover, &.button-active, &.active {
         color: $primary-color;
       }
 

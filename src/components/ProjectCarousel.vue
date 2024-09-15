@@ -1,138 +1,79 @@
 <template>
   <div class="carousel-modal__overlay" @click="closeCarousel">
     <div class="carousel-modal__content" ref="carouselContainer" @click.stop>
-      <button class="carousel__arrow carousel__arrow--left" ref="leftArrow" @click="previousProject"></button>
+      <button class="carousel__arrow carousel__arrow--left"  @touchstart="handleTouchStart" @touchend="handleTouchEnd" @click="previousProject"></button>
       <ProjectCard 
         :project="currentProject" 
-        :currentLanguage="currentLanguage" 
-        :languageContent="languageContent" 
         @close="closeCarousel"
       />
-      <button class="carousel__arrow carousel__arrow--right" ref="rightArrow"  @click="nextProject"></button>
+      <button class="carousel__arrow carousel__arrow--right"  @touchstart="handleTouchStart" @touchend="handleTouchEnd"  @click="nextProject"></button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, watch, onMounted, onUnmounted, computed  } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useSwipe } from '@vueuse/core';
 import ProjectCard from './ProjectCard.vue';
-import { addTouchListeners } from '../utils/touchListeners';
+
+const emit = defineEmits(['close']);
+const { t } = useI18n();
+const currentIndex = ref(0);
+
 const projects = ref([
   {
-    title: {
-      EN: 'Energy Pricing Tools and Technical Migration (Opteam & Explore)',
-      FR: 'Outils de Tarification Énergie et Migration Technique (Opteam & Explore)',
-    },
-    description: {
-      EN: 'Full-Stack Engineer involved in the design and development of Opteam and Explore, energy pricing applications. I contributed to the migration to a new technical stack to enhance performance and maintainability, while helping train new recruits and implementing key architectural improvements.',
-      FR: 'Ingénieur Full-Stack, j’ai participé à la conception et au développement des applications Opteam et Explore pour la tarification de l\'énergie. J\'ai également contribué à la migration vers un nouveau socle technique afin d\'améliorer les performances et la maintenabilité, tout en aidant à la formation des nouvelles recrues et en mettant en place des améliorations architecturales.',
-    },
+    id: 'engie',
     image: '/engie.webp',
     tags: ['ASP.NET Core', 'C#', 'VB.NET', 'EF Core', 'JavaScript', 'jQuery', 'Bootstrap', 'CSS3', 'HTML5', 'SQL Server', 'Azure DevOps', 'TFVC','Azure Service Bus', 'SonarQube', 'MSTest', 'Moq', 'Automapper', 'Cypress', 'Log4net'],
-    liveDemo: 'https://project1-demo.com',
-    repository: 'https://github.com/user/project1',
+    liveDemo: '#',
+    repository: '#',
     status: 'confidential',
   },
   {
-    title: {
-      EN: 'Development of Abacus: Pricing Tool for the Product and Service Portfolio',
-      FR: 'Développement d\'Abacus : Outil de Tarification pour le Portefeuille de Produits et Services',
-    },
-    description: {
-      EN: 'As a Full-Stack Engineer, I contributed to the development of Abacus, a B2B pricing tool for Orange Business Services. I developed new features, worked on front-end and back-end migrations, and enhanced the application\'s resilience. I also implemented a real-time notification system to track the progress of asynchronous operations triggered by an Event Bus, providing users with better visibility into the status of ongoing processes. I collaborated with international teams on various technical and functional aspects.',
-      FR: 'En tant qu\'ingénieur Full-Stack, j\'ai participé au développement d\'Abacus, un outil de tarification B2B pour Orange Business Services. J\'ai conçu de nouvelles fonctionnalités, contribué à la migration du front-end et du back-end, et amélioré la résilience de l\'application. J\'ai également mis en place un système de notifications en temps réel pour suivre la progression des opérations asynchrones déclenchées via un Event Bus, offrant ainsi une meilleure visibilité aux utilisateurs sur l\'état d\'avancement des processus. J\'ai collaboré avec des équipes internationales sur divers aspects techniques et fonctionnels.',
-    },
+    id: 'obs',
     image: '/obs.webp',
     tags: ['.NET 6', 'C#', 'EF Core', 'Vue.js', 'JavaScript', 'Boosted', 'CSS3', 'SASS', 'BEM', 'HTML5', 'SQL Server', 'Azure DevOps','Git', 'SonarQube', 'Docker', 'Redis', 'Event Bus', 'CaaS', 'xUnit', 'JetBrains dotTrace', 'Serilog', 'Kibana'],
-    liveDemo: 'https://project2-demo.com',
-    repository: 'https://github.com/user/project2',
+    liveDemo: '#',
+    repository: '#',
     status: 'confidential',
   },
   {
-    title: {
-      EN: 'Design and Implementation of an Automated Update System for Medical Robots',
-      FR: 'Développement d\'un Système de Mise à Jour Automatisée pour Robots Médicaux',
-    },
-    description: {
-      EN: 'As a Full-Stack Engineer at Axilum Robotics, I designed and developed an automated update system for their medical robots. I implemented a web application hosted on Azure to detect connected robots, prepare updates, and manage remote installations. Additionally, I developed a client-side WinForms application (robot) to retrieve and install updates, both online and offline. A SOAP-based web service was created to facilitate communication between the server and the robots. I also led functional prototyping and set up a test environment with two TMS-Robots.',
-      FR: 'En tant qu\'ingénieur Full-Stack chez Axilum Robotics, j\'ai conçu et développé un système de mise à jour automatisée pour leurs robots médicaux. J\'ai mis en place une application web hébergée sur Azure permettant de détecter les robots connectés, de préparer les mises à jour et de gérer leur installation à distance. J\'ai également développé une application WinForms côté client (robot) pour récupérer et installer les mises à jour, que ce soit en ligne ou hors ligne. Un service web basé sur SOAP a été créé pour assurer la communication entre le serveur et les robots. J\'ai également assuré les tests fonctionnels et mis en place un environnement de développement avec un réseau de test.',
-    },
+    id: 'axilum',
     image: '/axilum.webp',
     tags: ['ASP.NET Webforms','ASP.NET Winforms', 'C#', 'Powershell', 'Bash', 'Windows Embedded 8', 'Azure AD', 'JavaScript', 'CSS3', 'HTML5'],
-    liveDemo: 'https://project3-demo.com',
-    repository: 'https://github.com/user/project3',
+    liveDemo: '#',
+    repository: '#',
     status: 'confidential',
   },
   {
-    title: {
-      EN: 'NFC and QR Code Communication Integration for Banking Terminals',
-      FR: 'Intégration de Communication NFC/QR Code sur Automate Bancaire',
-    },
-    description: {
-      EN: 'As an Embedded Systems R&D Engineer, I designed and developed C++ libraries to interface RS232 barcode readers with an embedded card running on Windows CE. I also created a cross-platform mobile application enabling seamless NFC and QR code communication between a smartphone and a banking terminal. This project involved prototyping, functional testing, and comprehensive system documentation. Additionally, I managed the technical interface between Gunnebo and its suppliers to ensure smooth integration of their technologies.',
-      FR: 'En tant qu\'ingénieur R&D en systèmes embarqués, j\'ai conçu et développé des bibliothèques en C++ pour interfacer des lecteurs de code-barres RS232 avec une carte embarquée fonctionnant sous Windows CE. J\'ai également créé une application mobile multiplateforme permettant une communication fluide entre un smartphone et un automate bancaire via NFC et QR code. Ce projet incluait le prototypage, les tests fonctionnels ainsi que la documentation complète du système. J\'ai aussi assuré l\'interface technique entre Gunnebo et ses fournisseurs pour garantir l\'intégration fluide de leurs technologies.',
-    },
+    id: 'gunnebo',
     image: '/gunnebo.webp',
     tags: ['C++','C#/.NET', 'Windows CE 7', 'Xamarin', 'NFC', 'QR Code', 'SQLite', 'Azure AD', 'JavaScript', 'CSS3', 'HTML5'],
-    liveDemo: 'https://project3-demo.com',
-    repository: 'https://github.com/user/project3',
+    liveDemo: '#',
+    repository: '#',
     status: 'confidential',
   },
   {
-    title: {
-      EN: 'Personal Portfolio: Projects and Professional Experiences',
-      FR: 'Portfolio Personnel : Projets et Expériences Professionnelles',
-    },
-    description: {
-      EN: 'This portfolio showcases a selection of my projects and experiences.',
-      FR: 'Ce portfolio présente une sélection de mes projets et expériences.',
-    },
+    id: 'portfolio',
     image: '/portfolio.webp',
     tags: ['Vue.js', 'SCSS', 'BEM', 'Git', 'Vercel'],
-    liveDemo: 'https://project3-demo.com',
-    repository: 'https://github.com/user/project3',
+    liveDemo: 'https://www.ilyasrima.dev/',
+    repository: 'https://github.com/irilias/Portfolio',
     status: 'public',
   },
   {
-    title: {
-      EN: 'Frontend Development for salaires.dev',
-      FR: 'Développement du frontend pour salaires.dev',
-    },
-    description: {
-      EN: 'Currently designing and developing an interactive frontend for the salaires.dev platform using Vue.js, aimed at enhancing user experience and navigation.',
-      FR: 'Actuellement en train de concevoir et développer un frontend interactif pour la plateforme salaires.dev en utilisant Vue.js, afin d\'améliorer l\'expérience utilisateur et la navigation.',
-    },
+    id: 'salaires',
     image: '/salaires.dev.webp',
     tags: ['Vue.js', 'SCSS', 'BEM'],
-    liveDemo: 'https://project3-demo.com',
-    repository: 'https://github.com/user/project3',
+    liveDemo: '#',
+    repository: '#',
     status: 'in-progress'
   }
 ]);
 
-const languageContent = ref({
-  EN: {
-    repository: "Repository",
-    demo: "Live Demo",
-    confidentialMessage: "This project is confidential and access to the repository and live demo is restricted.",
-    inProgressMessage: "This project is currently in progress. The repository and live demo are not available yet.",
-    readMore: "Read More",
-  },
-  FR: {
-    repository: "Dépôt",
-    demo: "Démo en Direct",
-    confidentialMessage: "Ce projet est confidentiel et l'accès au dépôt et à la démo en direct est restreint.",
-    inProgressMessage: "Ce projet est actuellement en cours. Le dépôt et la démo en direct ne sont pas encore disponibles.",
-    readMore: "Lire la suite",
-  }
-});
-
-const props = defineProps(['currentLanguage']);
-const emit = defineEmits(['close']);
 
 
-const currentIndex = ref(0);
 const nextProject = () => {
   currentIndex.value = (currentIndex.value + 1) % projects.value.length;
 };
@@ -151,6 +92,8 @@ const currentProject = computed(() => {
   const project = projects.value[currentIndex.value];
   return {
     ...project,
+    title: t(`projects.${project.id}.title`),
+    description: t(`projects.${project.id}.description`),
     image: generateSrcSet(project.image)
   };
 });
@@ -176,10 +119,17 @@ const closeCarousel = () => {
   emit('close');
 };
 
-const goToSlide = (index) => {
-  currentIndex.value = index;
+// const goToSlide = (index) => {
+//   currentIndex.value = index;
+// };
+
+const handleTouchStart = (event) => {
+  event.target.classList.add('button-active');
 };
 
+const handleTouchEnd = (event) => {
+  event.target.classList.remove('button-active');
+};
 
 const carouselContainer = ref(null);
 const { isSwiping, direction } = useSwipe(carouselContainer);
@@ -198,7 +148,7 @@ const carouselInterval = ref(null);
 const startCarousel = () => {
   carouselInterval.value = setInterval(() => {
     nextProject();
-  }, 5000000); 
+  }, 4000); 
 };
 const stopCarousel = () => {
   clearInterval(carouselInterval.value);
@@ -207,10 +157,8 @@ const pauseCarousel = () => {
   stopCarousel();
   setTimeout(startCarousel, 10000); 
 };
-const leftArrow = ref(null);
-const rightArrow = ref(null);
+
 onMounted(() => {
-  [leftArrow.value, rightArrow.value].forEach(button => addTouchListeners(button, 'button-active'));
   startCarousel();
   carouselContainer.value.addEventListener('mouseenter', stopCarousel);
   carouselContainer.value.addEventListener('mouseleave', startCarousel);

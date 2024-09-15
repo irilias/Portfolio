@@ -1,5 +1,5 @@
 
-const ENCRYPTION_KEY = 'YourSecretKey123'; // Replace with a strong, unique key
+const ENCRYPTION_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 export const encryptData = async (data) => {
   const encoder = new TextEncoder();

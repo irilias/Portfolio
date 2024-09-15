@@ -6,42 +6,42 @@
       <img src="../assets/logo.png" alt="Logo" class="header__logo">
       <div class="header__right">
         <div class="header__social-icons">
-          <a href="https://www.linkedin.com/in/irilias/" target="_blank" rel="noopener noreferrer" ref="linkedinIcon">
+          <a href="https://www.linkedin.com/in/irilias/" target="_blank" rel="noopener noreferrer" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
             <i class="fab fa-linkedin"></i>
           </a>
-          <a href="https://github.com/irilias" target="_blank" rel="noopener noreferrer" ref="githubIcon">
+          <a href="https://github.com/irilias" target="_blank" rel="noopener noreferrer" @touchstart="handleTouchStart" @touchend="handleTouchEnd">
             <i class="fab fa-github"></i>
           </a>
         </div>
         <div class="header__language-switcher">
-          <span @click="setLanguage('EN')" :class="{ active: currentLanguage === 'EN' }" ref="enLang">EN</span>
+          <span @touchstart="handleTouchStart" @touchend="handleTouchEnd" @click="setLanguage('EN')" :class="{ active: currentLanguage === 'EN' }">EN</span>
           <span>|</span>
-          <span @click="setLanguage('FR')" :class="{ active: currentLanguage === 'FR' }" ref="frLang">FR</span>
+          <span @touchstart="handleTouchStart" @touchend="handleTouchEnd" @click="setLanguage('FR')" :class="{ active: currentLanguage === 'FR' }">FR</span>
         </div>
       </div>
       </header>
 
     <main class="main">
-      <h1 class="main__heading">{{ languageContent[currentLanguage].heading }}</h1>
+      <h1 class="main__heading">{{ t('home.heading') }}</h1>
       <p class="main__description">
-        {{ languageContent[currentLanguage].description }}
+        {{ t('home.description') }}
       </p>
       <p class="main__description">
-        {{ languageContent[currentLanguage].description_hook }}
+        {{ t('home.description_hook') }}
       </p>
-      <p class="main__availability">{{ languageContent[currentLanguage].availableForWork }}</p>
+      <p class="main__availability">{{ t('home.availableForWork') }}</p>
       <div class="main__cta">
-        <button class="main__cta-primary" ref="primaryButton" @click="showModal = true">
-          <span>{{ languageContent[currentLanguage].contactButton }}</span>
+        <button class="main__cta-primary"  @touchstart="handleTouchStart" @touchend="handleTouchEnd" @click="showModal = true">
+          <span>{{ t('home.contactButton') }}</span>
           <img src="../assets/gmail-icon-logo.svg" alt="Gmail" class="main__cta-icon">
         </button>
         <div class="main__cta-secondary">
-          <button ref="resumeButton">
-            <span>{{ languageContent[currentLanguage].downloadResumeButton }}</span>
+          <button @touchstart="handleTouchStart" @touchend="handleTouchEnd" @click="handleResumeDownload" >
+            <span>{{ t('home.downloadResumeButton') }}</span>
             <img src="../assets/cv_icon.png" alt="CV" class="main__button-icon">
           </button>
-          <button ref="projectsButton"  @click="showProjects = true">
-            <span>{{ languageContent[currentLanguage].seeProjectsButton }}</span>
+          <button @touchstart="handleTouchStart" @touchend="handleTouchEnd" @click="showProjects = true">
+            <span>{{ t('home.seeProjectsButton') }}</span>
             <img src="../assets/projects_icon.png" alt="Projects" class="main__button-icon">
           </button>
         </div>
@@ -49,84 +49,66 @@
     </main>
 
     <footer class="footer">
-      <p class="footer__location">{{ languageContent[currentLanguage].currentLocation }}</p>
+      <p class="footer__location">{{ t('home.currentLocation') }}</p>
       <div class="footer__mode">
         <label class="switch">
           <input type="checkbox" disabled>
           <span class="slider round"></span>
         </label>
-        <span>{{ languageContent[currentLanguage].developerMode }}</span>
+        <span>{{ t('home.developerMode') }}</span>
       </div>
     </footer>
     </div>
   </div>
-  <ContactModal v-if="showModal" @close="showModal = false" :currentLanguage="currentLanguage" />
-  <ProjectCarousel v-if="showProjects" @close="showProjects = false" :currentLanguage="currentLanguage" />
+  <ContactModal v-if="showModal" @close="showModal = false" />
+  <ProjectCarousel v-if="showProjects" @close="showProjects = false" />
+  <ToastNotification 
+    :show="showToast" 
+    :message="toastMessage" 
+    :type="toastType" 
+    @close="showToast = false"
+  />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
+import { useLanguage } from '../composables/useLanguage'
+import { useI18n } from 'vue-i18n';
 import ContactModal from '../components/ContactModal.vue';
 import ProjectCarousel from '../components/ProjectCarousel.vue';
+import { useResumeDownload } from '../composables/useResumeDownload'
+import ToastNotification from '../components/ToastNotification.vue';
 
-const currentLanguage = ref(localStorage.getItem('language') || 'EN');
+const { downloadResume } = useResumeDownload()
+const { currentLanguage, setLanguage } = useLanguage()
+const { t } = useI18n();
+
 const showModal = ref(false);
 const showProjects = ref(false);
 
-const languageContent = ref({
-  EN: {
-    heading: "Full Stack Solutions Tailored to Your Business Needs",
-    description: "I’m a Full Stack Developer with expertise in .NET, Vue.js, and Azure. With 7 years of experience across various industries, I specialize in building scalable, high-performance applications.",
-    description_hook:" Let’s talk about your next project.",
-    contactButton: "Contact Me",
-    downloadResumeButton: "Download Resume",
-    seeProjectsButton: "See Projects",
-    availableForWork: "Available for freelance and permanent positions.",
-    currentLocation: "Current Location: Annecy, GMT+2",
-    developerMode: "Developer Mode",
-  },
-  FR: {
-    heading: "Solutions Full Stack Adaptées à Vos Besoins Métiers",
-    description: "Je suis développeur Full Stack spécialisé en .NET, Vue.js et Azure. Fort de 7 ans d’expérience dans divers secteurs, je me concentre sur la création d'applications performantes et évolutives.",
-    description_hook:"Discutons de votre prochain projet.",
-    contactButton: "Me Contacter",
-    downloadResumeButton: "Télécharger le CV",
-    seeProjectsButton: "Voir mes Projets",
-    availableForWork: "Disponible pour des missions freelance ou des postes en CDI.",
-    currentLocation: "Localisation Actuelle : Annecy, GMT+2",
-    developerMode: "Mode Développeur",
-  }
-});
-
-const setLanguage = (lang) => {
-  currentLanguage.value = lang;
-  localStorage.setItem('language', lang);
+const handleTouchStart = (event) => {
+  event.target.classList.add('button-active');
 };
 
-localStorage.setItem('language', currentLanguage.value);
+const handleTouchEnd = (event) => {
+  event.target.classList.remove('button-active');
+};
 
-const primaryButton = ref(null);
-const resumeButton = ref(null);
-const projectsButton = ref(null);
-const linkedinIcon = ref(null);
-const githubIcon = ref(null);
-const enLang = ref(null);
-const frLang = ref(null);
+const showToast = ref(false)
+const toastMessage = ref('')
+const toastType = ref('error')
 
-const addTouchListeners = (element, activeClass = 'touch-active') => {
-  element.addEventListener('touchstart', () => {
-    element.classList.add(activeClass);
+const handleResumeDownload = async () => {
+  const result = await downloadResume(currentLanguage);
+  if (!result.success) {
+    showToast.value = true
+    toastMessage.value = t('errors.resumeDownloadFailed')
+    toastType.value = 'error'
     setTimeout(() => {
-      element.classList.remove(activeClass);
-    }, 300);
-  });
-};
-
-
-onMounted(() => {
-  [primaryButton.value, resumeButton.value, projectsButton.value].forEach(button => addTouchListeners(button, 'button-active'));
-  [linkedinIcon.value, githubIcon.value, enLang.value, frLang.value].forEach(element => addTouchListeners(element));
-});
+      showToast.value = false;
+    }, 2000);
+  }
+}
 
 </script>
 

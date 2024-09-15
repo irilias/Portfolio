@@ -1,0 +1,62 @@
+
+{
+  "projects": {
+    "engie": {
+      "title": "Energy Pricing Tools and Technical Migration (Opteam & Explore)",
+      "description": "Full-Stack Engineer involved in the design and development of Opteam and Explore, energy pricing applications. I contributed to the migration to a new technical stack to enhance performance and maintainability, while helping train new recruits and implementing key architectural improvements."
+    },
+    "obs": {
+      "title": "Development of Abacus: Pricing Tool for the Product and Service Portfolio",
+      "description": "As a Full-Stack Engineer, I contributed to the development of Abacus, a B2B pricing tool for Orange Business Services. I developed new features, worked on front-end and back-end migrations, and enhanced the application's resilience. I also implemented a real-time notification system to track the progress of asynchronous operations triggered by an Event Bus, providing users with better visibility into the status of ongoing processes. I collaborated with international teams on various technical and functional aspects."
+    },
+    "axilum": {
+      "title": "Design and Implementation of an Automated Update System for Medical Robots",
+      "description": "As a Full-Stack Engineer at Axilum Robotics, I designed and developed an automated update system for their medical robots. I implemented a web application hosted on Azure to detect connected robots, prepare updates, and manage remote installations. Additionally, I developed a client-side WinForms application (robot) to retrieve and install updates, both online and offline. A SOAP-based web service was created to facilitate communication between the server and the robots. I also led functional prototyping and set up a test environment with two TMS-Robots."
+    },
+    "gunnebo": {
+      "title": "NFC and QR Code Communication Integration for Banking Terminals",
+      "description": "As an Embedded Systems R&D Engineer, I designed and developed C++ libraries to interface RS232 barcode readers with an embedded card running on Windows CE. I also created a cross-platform mobile application enabling seamless NFC and QR code communication between a smartphone and a banking terminal. This project involved prototyping, functional testing, and comprehensive system documentation. Additionally, I managed the technical interface between Gunnebo and its suppliers to ensure smooth integration of their technologies."
+    },
+    "portfolio": {
+      "title": "Personal Portfolio: Projects and Professional Experiences",
+      "description": "This portfolio showcases a selection of my projects and experiences."
+    },
+    "salaires": {
+      "title": "Frontend Development for salaires.dev",
+      "description": "Currently designing and developing an interactive frontend for the salaires.dev platform using Vue.js, aimed at enhancing user experience and navigation."
+    }
+  },
+  "common": {
+    "repository": "Repository",
+    "demo": "Live Demo",
+    "confidentialMessage": "This project is confidential and access to the repository and live demo is restricted.",
+    "inProgressMessage": "This project is currently in progress. The repository and live demo are not available yet.",
+    "readMore": "Read More"
+  },
+  "contact": {
+    "heading": "Contact Me",
+    "name": "Name",
+    "attachmentFile": "Attachment (optional)",
+    "browse": "Browse...",
+    "submitButton": "Send Message",
+    "emailSentSuccess": "Email sent successfully!",
+    "emailSentError": "Failed to send email. Please try again.",
+    "maxMessagesReached": "You've reached the maximum number of messages for today. Please try again tomorrow."
+  },
+  "home":
+  {
+    "heading": "Full Stack Solutions Tailored to Your Business Needs",
+    "description": "I’m a Full Stack Developer with expertise in .NET, Vue.js, and Azure. With 7 years of experience across various industries, I specialize in building scalable, high-performance applications.",
+    "description_hook":" Let’s talk about your next project.",
+    "contactButton": "Contact Me",
+    "downloadResumeButton": "Download Resume",
+    "seeProjectsButton": "See Projects",
+    "availableForWork": "Available for freelance and permanent positions.",
+    "currentLocation": "Current Location: Annecy, GMT+2",
+    "developerMode": "Developer Mode"
+  },
+  "errors": 
+  {
+    "resumeDownloadFailed": "Oops, something went wrong! Try again or check out my LinkedIn!"
+  }
+}

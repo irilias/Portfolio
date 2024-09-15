@@ -2,11 +2,11 @@
   <div class="modal__overlay" @click="closeModal">
     <div class="modal__content" @click.stop>
       <button class="modal__close-button" @click="closeModal">×</button>
-      <h2 class="modal__heading">{{ languageContent[currentLanguage].heading }}</h2>
+      <h2 class="modal__heading">{{ t('contact.heading') }}</h2>
       <form @submit.prevent="submitForm">
         <div class="modal__form-row">
           <div class="modal__form-group">
-            <label for="name" class="modal__label">{{ languageContent[currentLanguage].name }}</label>
+            <label for="name" class="modal__label">{{ t('contact.name') }}</label>
             <input type="text" id="name" v-model="form.name" class="modal__input" required>
           </div>
           <div class="modal__form-group">
@@ -19,16 +19,16 @@
           <textarea id="message" v-model="form.message" class="modal__textarea" required></textarea>
         </div>
         <div class="modal__form-group">
-                  <label for="attachment" class="modal__label">{{ languageContent[currentLanguage].attachmentFile }}</label>
+                  <label for="attachment" class="modal__label">{{ t('contact.attachmentFile') }}</label>
                   <div class="modal__file-upload">
                     <label for="attachment" class="modal__file-label">
-                      <span class="modal__file-text">{{ selectedFile || languageContent[currentLanguage].browse }}</span>
+                      <span class="modal__file-text">{{ selectedFile || t('contact.browse') }}</span>
                       <span class="modal__file-icon">📎</span>
                     </label>
                     <input type="file" id="attachment" @change="handleFileUpload" class="modal__file-input" disabled>
                   </div>
         </div>
-        <button type="submit" class="modal__submit-button">{{ languageContent[currentLanguage].submitButton }}</button>
+        <button type="submit" class="modal__submit-button">{{ t('contact.submitButton') }}</button>
       </form>
     </div>
   </div>
@@ -46,33 +46,11 @@ import emailjs from '@emailjs/browser';
 import ToastNotification from './ToastNotification.vue';
 import { log, error } from '../utils/logger';
 import { encryptData, decryptData } from '../utils/encryption';
+import { useI18n } from 'vue-i18n';
 
 const emit = defineEmits(['close']);
-const props = defineProps(['currentLanguage']);
 
-const languageContent = ref({
-EN: {
-  heading: "Contact Me",
-  name: "Name",
-  attachmentFile:" Attachment (optional)",
-  browse: "Browse...",
-  submitButton: "Send Message",
-  emailSentSuccess: "Email sent successfully!",
-  emailSentError: "Failed to send email. Please try again.",
-  maxMessagesReached: "You've reached the maximum number of messages for today. Please try again tomorrow."
-},
-FR: {
-  heading: "Contactez-moi",
-  name: "Nom",
-  attachmentFile:"Pièce jointe (optionnelle)",
-  browse: "Parcourir...",
-  submitButton: "Envoyer le Message",
-  emailSentSuccess: "E-mail envoyé avec succès !",
-  emailSentError: "Échec de l'envoi de l'e-mail. Veuillez réessayer.",
-  maxMessagesReached: "Vous avez atteint le nombre maximum de messages à envoyer pour aujourd'hui. Veuillez réessayer demain."
-}
-});
-
+const { t } = useI18n();
 const form = ref({
   name: '',
   email: '',
@@ -130,7 +108,7 @@ const canSendEmail = async () => {
 
 const submitForm = async () => {
   if (!(await canSendEmail())) {
-    toastMessage.value = languageContent.value[props.currentLanguage].maxMessagesReached;
+    toastMessage.value = t(`contact.maxMessagesReached`);
     toastType.value = 'error';
     showToast.value = true;
     return;
@@ -148,21 +126,21 @@ const submitForm = async () => {
   )
   .then((response) => {
     log('Email sent successfully:', response);
-    toastMessage.value = languageContent.value[props.currentLanguage].emailSentSuccess;
+    toastMessage.value = t(`contact.emailSentSuccess`);
     toastType.value = 'success';
     showToast.value = true;
     setTimeout(() => {
       showToast.value = false;
       closeModal();
-    }, 3000);
+    }, 2000);
   }, (err) => {
     error('Failed to send email:', err);
-    toastMessage.value = languageContent.value[props.currentLanguage].emailSentError;
+    toastMessage.value = t(`contact.emailSentError`);
     toastType.value = 'error';
     showToast.value = true;
     setTimeout(() => {
       showToast.value = false;
-    }, 3000);
+    }, 2000);
   });
 };
 </script>

@@ -30,8 +30,11 @@ defineEmits(['close']);
     border-radius: 4px;
     color: white;
     z-index: 9999;
+    max-width: 80%;
+    word-wrap: break-word;
 
-    &.error {      background-color: #dc3545;
+    &.error {
+      background-color: #dc3545;
     }
 
     &.success {
@@ -39,11 +42,26 @@ defineEmits(['close']);
     }
 
     &-enter-active, &-leave-active {
-      transition: opacity 0.5s;
+      transition: opacity 0.5s, transform 0.5s;
     }
 
     &-enter-from, &-leave-to {
       opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    @media (max-width: 768px) {
+      top: 10px;
+      right: 10px;
+      left: 10px;
+      max-width: calc(100% - 20px);
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+      padding: 6px 12px;
     }
   }
   </style>
