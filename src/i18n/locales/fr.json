@@ -44,7 +44,7 @@
     "maxMessagesReached": "Vous avez atteint le nombre maximum de messages à envoyer pour aujourd'hui. Veuillez réessayer demain."
   },
   "home": {
-    "heading": "Solutions Full Stack Adaptées à Vos Besoins Métiers",
+    "heading": "Solutions full stack adaptées à vos besoins métiers",
     "description": "Je suis développeur Full Stack spécialisé en .NET, Vue.js et Azure. Fort de 7 ans d’expérience dans divers secteurs, je me concentre sur la création d'applications performantes et évolutives.",
     "description_hook":"Discutons de votre prochain projet.",
     "contactButton": "Me Contacter",

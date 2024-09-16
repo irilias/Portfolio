@@ -1,5 +1,13 @@
-# Vue 3 + Vite
+## Getting Started Locally
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run the development server: `npm run dev`
+4. Build for production: `npm run build`
+5. Preview production build: `npm run preview`
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Deployment
+
+This project is set up for easy deployment on platforms like Vercel. Refer to the `vercel.json` for configuration details.
+
+For more information visit [Vercel Project Configuration Documentation](https://vercel.com/docs/projects/project-configuration)
