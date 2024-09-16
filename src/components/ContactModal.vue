@@ -132,7 +132,7 @@ const submitForm = async () => {
     setTimeout(() => {
       showToast.value = false;
       closeModal();
-    }, 2000);
+    }, 1500);
   }, (err) => {
     error('Failed to send email:', err);
     toastMessage.value = t(`contact.emailSentError`);
