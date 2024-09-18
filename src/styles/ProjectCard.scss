@@ -160,48 +160,86 @@
     }
   }
 
+  &__status-message {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(to right, rgba(40, 222, 103, 0.1), rgba(40, 222, 103, 0.2));
+    border: 1px solid rgba(40, 222, 103, 0.3);
+    border-radius: $border-radius;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: $spacing-medium;
+    margin-top: $spacing-medium;
+    
+    p {
+      margin: 0;
+      font-weight: 500;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: $text-color;
+      letter-spacing: 0.02em;
+    }
+
+  }
+
+  &__status-icon {
+    margin-right: $spacing-small;
+    height: 20px;
+  }
+
   @media (max-width: 320px) {
   }
   @media (max-width: 375px) {
     
   }
+
   @media (max-width: 414px) {
     &__buttons {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
 
-  &__button {
-    width: 50%;
-    height: 50%;
-    max-width: 200px;
-    height: auto;
-    padding: 10px;
+    &__button {
+      width: 50%;
+      height: 50%;
+      max-width: 200px;
+      height: auto;
+      padding: 10px;
     
-    span {
-      display: inline;
-      font-size: 0.9rem;
-    }
+      span {
+        display: inline;
+        font-size: 0.9rem;
+      }
 
-    img {
-      position: static;
-      opacity: 0;
-      transform: none;
-      margin-left: 5px;
-      width: 20px;
-      height: 20px;
-      transition: transform 0.3s ease;
-      transform: translateX(10px);
-    }
-    &:hover, &.button-active {
       img {
-        opacity: 1;
-        transform: scale(1.1);
-        transform: translateX(0);
+        position: static;
+        opacity: 0;
+        transform: none;
+        margin-left: 5px;
+        width: 20px;
+        height: 20px;
+        transition: transform 0.3s ease;
+        transform: translateX(10px);
+      }
+      &:hover, &.button-active {
+        img {
+          opacity: 1;
+          transform: scale(1.1);
+          transform: translateX(0);
+        }
       }
     }
-  }
+    &__status-message {
+      padding: $spacing-small;
+      
+      p {
+        font-size: 0.8rem;
+      }
+    }
+
+    &__status-icon {
+      height: 20px;
+    }
   }
   @media (max-width: 768px) {
     &__title {
@@ -217,6 +255,19 @@
     }
     &__tags {
       margin: 20px;
+    }
+    &__status-message {
+      flex-direction: column;
+      text-align: center;
+      
+      p {
+        margin-top: $spacing-small;
+      }
+    }
+
+    &__status-icon {
+      margin-right: 0;
+      margin-bottom: $spacing-small;
     }
    
   }

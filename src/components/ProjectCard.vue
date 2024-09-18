@@ -35,20 +35,16 @@
           <span>{{ t('common.repository') }}</span>
           <img src="../assets/repository_icon.png" alt="Repository" class="project-card__button-icon">
         </a>
-        <p v-if="project.status === 'confidential'" class="project-card__status-message">
-          {{ t('common.confidentialMessage') }}
-        </p>
-        <p v-if="project.status === 'in-progress'" class="project-card__status-message">
-          {{ t('common.inProgressMessage') }}
-        </p>
+        <div v-if="project.status === 'confidential' || project.status === 'in-progress'" :class="['project-card__status-message', { 'in-progress': project.status === 'in-progress' }]">
+          <img :src="getStatusIcon(project.status)" :alt="project.status" class="project-card__status-icon">
+          <p>{{ getStatusMessage(project.status) }}</p>
+        </div>
       </div>
     </div>
-  </div>
-</template>
+  </div></template>
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-
 const { t } = useI18n();
 
 
@@ -70,6 +66,17 @@ const handleTouchStart = (event) => {
 
 const handleTouchEnd = (event) => {
   event.target.classList.remove('button-active');
+};
+
+const getStatusIcon = (status) => {
+  return status === 'confidential' 
+    ? new URL('../assets/confidential_icon.png', import.meta.url).href
+    : new URL('../assets/work-in-progress_icon.png', import.meta.url).href;
+};
+
+
+const getStatusMessage = (status) => {
+  return status === 'confidential' ? t('common.confidentialMessage') : t('common.inProgressMessage');
 };
 
 </script>
