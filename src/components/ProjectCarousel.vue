@@ -148,7 +148,7 @@ const carouselInterval = ref(null);
 const startCarousel = () => {
   carouselInterval.value = setInterval(() => {
     nextProject();
-  }, 300000); 
+  }, 3000); 
 };
 const stopCarousel = () => {
   clearInterval(carouselInterval.value);
