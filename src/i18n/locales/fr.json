@@ -3,11 +3,11 @@
   "projects": {
     "engie": {
       "title": "Outils de Tarification Énergie et Migration Technique (Opteam & Explore)",
-      "description": "Ingénieur Full-Stack, j'ai participé à la conception et au développement des applications Opteam et Explore pour la tarification de l'énergie. J'ai également contribué à la migration vers un nouveau socle technique afin d'améliorer les performances et la maintenabilité, tout en aidant à la formation des nouvelles recrues et en mettant en place des améliorations architecturales."
+      "description": "En tant qu’ingénieur Full-Stack, j’ai contribué au développement des applications Opteam et Explore pour la tarification de l’énergie. J’ai participé à la migration du socle technique, améliorant les performances et la maintenabilité tout en optimisant l’architecture technique et en formant de nouvelles recrues."
     },
     "obs": {
       "title": "Développement d'Abacus : Outil de Tarification pour le Portefeuille de Produits et Services",
-      "description": "En tant qu'ingénieur Full-Stack, j'ai participé au développement d'Abacus, un outil de tarification B2B pour Orange Business Services. J'ai conçu de nouvelles fonctionnalités, contribué à la migration du front-end et du back-end, et amélioré la résilience de l'application. J'ai également mis en place un système de notifications en temps réel pour suivre la progression des opérations asynchrones déclenchées via un Event Bus, offrant ainsi une meilleure visibilité aux utilisateurs sur l'état d'avancement des processus. J'ai collaboré avec des équipes internationales sur divers aspects techniques et fonctionnels."
+      "description": "En tant qu’ingénieur Full-Stack, j’ai développé des fonctionnalités pour Abacus, un outil de tarification B2B. J’ai travaillé sur la migration du socle technique front-end/back-end, optimisé la résilience de l’application, et mis en place un système de notifications en temps réel pour suivre les processus asynchrones basés sur un bus de messages."
     },
     "axilum": {
       "title": "Développement d'un Système de Mise à Jour Automatisée pour Robots Médicaux",
@@ -24,6 +24,10 @@
     "salaires": {
       "title": "Développement du frontend pour salaires.dev",
       "description": "Actuellement en train de concevoir et développer un frontend interactif pour la plateforme salaires.dev en utilisant Vue.js, afin d'améliorer l'expérience utilisateur et la navigation."
+    },
+    "schedra": {
+      "title": "Développement d'une Plateforme de Gestion d’Événements",
+      "description": "Développement d'une plateforme web de gestion d'événements, intégrée à l'API Microsoft Dynamics 365."
     }
   },
   "common": {

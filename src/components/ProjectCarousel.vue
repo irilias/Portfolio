@@ -69,6 +69,14 @@ const projects = ref([
     liveDemo: '#',
     repository: '#',
     status: 'in-progress'
+  },
+  {
+    id: 'schedra',
+    image: '/schedra.webp',
+    tags: ['.NET 6', 'C#', 'Vue.js', 'Vuetify', 'Azure Entra Id', 'Azure App Services', 'Azure Applciation Insights', 'Azure DevOps', 'Docker', 'Git', 'Dynamics 365 API'],
+    liveDemo: '#',
+    repository: '#',
+    status: 'confidential'
   }
 ]);
 

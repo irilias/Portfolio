@@ -3,11 +3,11 @@
   "projects": {
     "engie": {
       "title": "Energy Pricing Tools and Technical Migration (Opteam & Explore)",
-      "description": "Full-Stack Engineer involved in the design and development of Opteam and Explore, energy pricing applications. I contributed to the migration to a new technical stack to enhance performance and maintainability, while helping train new recruits and implementing key architectural improvements."
+      "description": "As a full-stack engineer, I contributed to the development of Opteam and Explore, energy pricing applications. I participated in the migration of the technical stack, enhancing performance and maintainability while optimizing the architecture and training new team members."
     },
     "obs": {
       "title": "Development of Abacus: Pricing Tool for the Product and Service Portfolio",
-      "description": "As a Full-Stack Engineer, I contributed to the development of Abacus, a B2B pricing tool for Orange Business Services. I developed new features, worked on front-end and back-end migrations, and enhanced the application's resilience. I also implemented a real-time notification system to track the progress of asynchronous operations triggered by an Event Bus, providing users with better visibility into the status of ongoing processes. I collaborated with international teams on various technical and functional aspects."
+      "description": "As a full-stack engineer, I developed features for Abacus, a B2B pricing tool. I contributed to the migration of the technical stack for both front-end and back-end, optimized the application's resilience, and implemented a real-time notification system to track asynchronous processes based on a message bus."
     },
     "axilum": {
       "title": "Design and Implementation of an Automated Update System for Medical Robots",
@@ -24,6 +24,10 @@
     "salaires": {
       "title": "Frontend Development for salaires.dev",
       "description": "Currently designing and developing an interactive frontend for the salaires.dev platform using Vue.js, aimed at enhancing user experience and navigation."
+    },
+    "schedra": {
+      "title": "Development of an Event Management Platform",
+      "description": "Development of a web-based event management platform, integrated with Microsoft Dynamics 365 API"
     }
   },
   "common": {
