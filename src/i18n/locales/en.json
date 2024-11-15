@@ -21,10 +21,6 @@
       "title": "Personal Portfolio: Projects and Professional Experiences",
       "description": "This portfolio showcases a selection of my projects and experiences."
     },
-    "salaires": {
-      "title": "Frontend Development for salaires.dev",
-      "description": "Currently designing and developing an interactive frontend for the salaires.dev platform using Vue.js, aimed at enhancing user experience and navigation."
-    },
     "schedra": {
       "title": "Development of an Event Management Platform",
       "description": "Development of a web-based event management platform, integrated with Microsoft Dynamics 365 API"
@@ -56,7 +52,7 @@
     "downloadResumeButton": "Download Resume",
     "seeProjectsButton": "See Projects",
     "availableForWork": "Available for freelance and permanent positions.",
-    "currentLocation": "Current Location: Annecy, GMT+2",
+    "currentLocation": "Current Location: Annecy, GMT+1",
     "developerMode": "Developer Mode"
   },
   "errors": 

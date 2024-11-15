@@ -21,10 +21,6 @@
       "title": "Portfolio Personnel : Projets et Expériences Professionnelles",
       "description": "Ce portfolio présente une sélection de mes projets et expériences."
     },
-    "salaires": {
-      "title": "Développement du frontend pour salaires.dev",
-      "description": "Actuellement en train de concevoir et développer un frontend interactif pour la plateforme salaires.dev en utilisant Vue.js, afin d'améliorer l'expérience utilisateur et la navigation."
-    },
     "schedra": {
       "title": "Développement d'une Plateforme de Gestion d’Événements",
       "description": "Développement d'une plateforme web de gestion d'événements, intégrée à l'API Microsoft Dynamics 365."
@@ -55,7 +51,7 @@
     "downloadResumeButton": "Télécharger le CV",
     "seeProjectsButton": "Voir mes Projets",
     "availableForWork": "Disponible pour des missions freelance ou des postes en CDI.",
-    "currentLocation": "Localisation Actuelle : Annecy, GMT+2",
+    "currentLocation": "Localisation Actuelle : Annecy, GMT+1",
     "developerMode": "Mode Développeur"
   },
   "errors": 
