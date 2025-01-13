@@ -1,4 +1,3 @@
-
 {
   "projects": {
     "engie": {
@@ -21,7 +20,7 @@
       "title": "Portfolio Personnel : Projets et Expériences Professionnelles",
       "description": "Ce portfolio présente une sélection de mes projets et expériences."
     },
-    "schedra": {
+    "eventtia": {
       "title": "Développement d'une Plateforme de Gestion d’Événements",
       "description": "Développement d'une plateforme web de gestion d'événements, intégrée à l'API Microsoft Dynamics 365."
     }
@@ -46,7 +45,7 @@
   "home": {
     "heading": "Solutions full stack adaptées à vos besoins métiers",
     "description": "Je suis développeur Full Stack spécialisé en .NET, Vue.js et Azure. Fort de 7 ans d’expérience dans divers secteurs, je me concentre sur la création d'applications performantes et évolutives.",
-    "description_hook":"Discutons de votre prochain projet.",
+    "description_hook": "Discutons de votre prochain projet.",
     "contactButton": "Me Contacter",
     "downloadResumeButton": "Télécharger le CV",
     "seeProjectsButton": "Voir mes Projets",
@@ -54,8 +53,7 @@
     "currentLocation": "Localisation Actuelle : Annecy, GMT+1",
     "developerMode": "Mode Développeur"
   },
-  "errors": 
-  {
+  "errors": {
     "resumeDownloadFailed": "Aïe, une erreur ! Essayez encore ou passez voir mon LinkedIn !"
   }
 }
